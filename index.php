@@ -1,3 +1,25 @@
+<?php
+session_start();
+include 'db.php';
+
+// التحقق من حالة تسجيل الدخول
+$logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
+// echo $logged_in;
+// إذا كان المستخدم مسجلاً الدخول، جلب تفاصيل المستخدم
+if ($logged_in) {
+    $account_type = $_SESSION['account_type']; 
+    $email = $_SESSION['email'];
+    $user_id = $_SESSION['user_id'];
+} else {
+    
+    $_SESSION['loggedin'] = false;
+}
+
+// لطباعة الجلسة للتحقق
+echo '<pre>';
+echo '</pre>';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,14 +43,29 @@
         <div class="header-content">
             <!-- القائمة العلوية -->
             <nav>
-                <ul class="nav-list">
-                    <li>About us</li>
-                    <li>Solutions</li>
-                    <li>Partners</li>
-                    <li>Our Clients</li>
-                    <li>Contact</li>
-                </ul>
-            </nav>
+    <ul class="nav-list">
+        <li>About us</li>
+        <li>Solutions</li>
+        <li>Partners</li>
+        <li>Our Clients</li>
+        <li>Contact</li>
+        <!-- <?php echo $logged_in;?> -->
+        <?php if ($logged_in): ?>
+            <?php if ($account_type === 'customer'): ?>
+                <li class="nav-item"><a href="user/profail.php" class="nav-link">Profile</a></li>
+            <?php elseif ($account_type === 'employee'): ?>
+                <li class="nav-item"><a href="emp/profail.php" class="nav-link">Control</a></li>
+            <?php elseif ($account_type === 'admin'): ?>
+                <li class="nav-item"><a href="admin/admin_dashboard.php" class="nav-link">Admin Panel</a></li>
+            <?php endif; ?>
+            <li class="nav-item"><a href="pages/logout.php" class="nav-link">Logout</a></li>
+        <?php else: ?>
+            <!-- خيار تسجيل الدخول إذا لم يكن مسجلاً -->
+            <li class="nav-item"><a href="pages/login.php" class="nav-link">Login</a></li>
+        <?php endif; ?>
+    </ul>
+</nav>
+
 
             <!-- النص الرئيسي في الهيدر -->
             <div class="hero-text">

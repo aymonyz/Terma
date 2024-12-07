@@ -12,7 +12,7 @@ if (isset($_SESSION['user_id'])) {
 // تسجيل الخروج
 if (isset($_GET['logout'])) {
     session_destroy();
-    header("Location: ../admin.php");
+    header("Location: ../index.php");
     exit();
 }
 

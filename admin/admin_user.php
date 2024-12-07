@@ -177,6 +177,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
         .btn-warning:hover {
             background-color: #e0a800;
         }
+        .sidebar .username {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #ffc107;
+        }
     </style>
 </head>
 
@@ -184,6 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
     <!-- Sidebar -->
     <div class="sidebar">
         <h4 class="text-white">القائمة</h4>
+        <div class="username">مرحباً، المدير </div>
         <a href="admin_dashboard.php">الصفحة الرئيسية</a>
         <a href="admin_user.php">إدارة المستخدمين</a>
         <a href="manage_requests.php">إدارة الطلبات</a>
