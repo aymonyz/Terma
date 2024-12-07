@@ -33,39 +33,26 @@ echo '</pre>';
 </head>
 <body>
     <!-- الهيدر مع الفيديو كخلفية -->
-    <header class="video-header">
-        <!-- فيديو الخلفية -->
-        <video autoplay loop muted playsinline class="background-video">
-            <source src="vido/Comp-1.mp4" type="video/mp4">
-        </video>
+ <!-- الهيدر مع الفيديو كخلفية -->
+<header class="video-header">
+
+    <!-- فيديو الخلفية -->
+    <video autoplay loop muted playsinline class="background-video">
+        <source src="vido/Comp-1.mp4" type="video/mp4">
+    </video>
 
         <!-- محتوى الهيدر -->
         <div class="header-content">
             <!-- القائمة العلوية -->
             <nav>
-    <ul class="nav-list">
-        <li>About us</li>
-        <li>Solutions</li>
-        <li>Partners</li>
-        <li>Our Clients</li>
-        <li>Contact</li>
-        <!-- <?php echo $logged_in;?> -->
-        <?php if ($logged_in): ?>
-            <?php if ($account_type === 'customer'): ?>
-                <li class="nav-item"><a href="user/profail.php" class="nav-link">Profile</a></li>
-            <?php elseif ($account_type === 'employee'): ?>
-                <li class="nav-item"><a href="emp/profail.php" class="nav-link">Control</a></li>
-            <?php elseif ($account_type === 'admin'): ?>
-                <li class="nav-item"><a href="admin/admin_dashboard.php" class="nav-link">Admin Panel</a></li>
-            <?php endif; ?>
-            <li class="nav-item"><a href="pages/logout.php" class="nav-link">Logout</a></li>
-        <?php else: ?>
-            <!-- خيار تسجيل الدخول إذا لم يكن مسجلاً -->
-            <li class="nav-item"><a href="pages/login.php" class="nav-link">Login</a></li>
-        <?php endif; ?>
-    </ul>
-</nav>
-
+                <ul class="nav-list">
+                    <li>About us</li>
+                    <li>Solutions</li>
+                    <li>Partners</li>
+                    <li>Our Clients</li>
+                    <li>Contact</li>
+                </ul>
+            </nav>
 
             <!-- النص الرئيسي في الهيدر -->
             <div class="hero-text">
@@ -77,33 +64,39 @@ echo '</pre>';
     <!-- قسم الفيديو (Hero Section) -->
      
 
-    <!-- قسم التعريف بالشركة -->
-    <section class="about-section">
-        <div class="container">
-            <h3 class="section-title">KNOW US</h3>
-            <h2 class="main-title">Who We Are</h2>
-            <p class="description">
-                Terma Medical is the leading healthcare solutions provider in Khartoum Sudan. Over the years, we have partnered with the world’s most renowned healthcare companies that offer the best-in-class solutions and finest technology. Through ongoing and sustainable improvements, we can provide solutions that generate significant value for healthcare providers and their patients.
-            </p>
-            <div class="stats">
-                <div class="stat">
-                    <img src="icom/count-icon-3.webp" alt="Partners Icon" class="icon">
-                    <h3>+200</h3>
-                    <p>Employees</p>
-                </div>
-                <div class="stat">
-                    <img src="icom/count-icon-2.webp" alt="Employees Icon" class="icon">
-                    <h3>+600</h3>
-                    <p>Products</p>
-                </div>
-                <div class="stat">
-                    <img src="icom/count-icon-1-150x103.webp" alt="Products Icon" class="icon">
-                    <h3>+70,000</h3>
-                    <p>Partners</p>
-                </div>
+<!-- قسم التعريف بالشركة -->
+ 
+<section id="about-section" class="about-section">
+    <div class="container">
+        <h3 class="section-title">KNOW US</h3>
+        <h2 class="main-title">Who We Are</h2>
+        <p class="description">
+            Terma Medical is the leading healthcare solutions provider in Khartoum Sudan. Over the years, we have partnered with the world’s most renowned healthcare companies that offer the best-in-class solutions and finest technology. Through ongoing and sustainable improvements, we can provide solutions that generate significant value for healthcare providers and their patients.
+        </p>
+        <div class="stats">
+            <div class="stat">
+                <img src="icom/count-icon-3.webp" alt="Partners Icon" class="icon">
+                <h3>+200</h3>
+                <p>Employees</p>
+            </div>
+            <div class="stat">
+                <img src="icom/count-icon-2.webp" alt="Employees Icon" class="icon">
+                <h3>+600</h3>
+                <p>Products</p>
+            </div>
+            <div class="stat">
+                <img src="icom/count-icon-1-150x103.webp" alt="Products Icon" class="icon">
+                <h3>+70,000</h3>
+                <p>Partners</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+    <!-- قسم الفيديو (Hero Section) -->
+     
+
+  
 
    
 
@@ -186,7 +179,7 @@ echo '</pre>';
 
    
 
-    <footer class="footer">
+    <footer id ="footer" class="footer">
         <div class="footer-container">
         <div class="footer-column">
             <h4>Contact Us</h4>
@@ -220,4 +213,5 @@ echo '</pre>';
 </footer>
 
 </body>
+
 </html>
