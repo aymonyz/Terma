@@ -53,6 +53,11 @@ body {
     cursor: pointer;
     transition: color 0.3s ease;
 }
+.nav-item a{
+    text-decoration: none;
+    color:white;
+
+}
 
 .nav-list li:hover {
     color: #f05a28;

@@ -1,3 +1,25 @@
+<?php
+session_start();
+include 'db.php';
+
+// التحقق من حالة تسجيل الدخول
+$logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
+// echo $logged_in;
+// إذا كان المستخدم مسجلاً الدخول، جلب تفاصيل المستخدم
+if ($logged_in) {
+    $account_type = $_SESSION['account_type']; 
+    $email = $_SESSION['email'];
+    $user_id = $_SESSION['user_id'];
+} else {
+    
+    $_SESSION['loggedin'] = false;
+}
+
+// لطباعة الجلسة للتحقق
+echo '<pre>';
+echo '</pre>';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,29 +41,28 @@
         <source src="vido/Comp-1.mp4" type="video/mp4">
     </video>
 
-    <!-- محتوى الهيدر -->
-    <div class="header-content">
-        <!-- القائمة العلوية -->
-        <nav>
-            <ul class="nav-list">
-                <li><a href="#about-section">About us</a></li>
-                <li><a href="#section1">Solutions</a></li>
-                <li><a href="#partners-section">Partners</a></li>
-                <li><a href="#clients-section">Our Clients</a></li>
-                <li><a href="#footer">Contact</a></li>
-            </ul>
-        </nav>
-        
-        <!-- النص الرئيسي في الهيدر -->
-        <div class="hero-text">
-            <h1>Terma Medical</h1>
-            <p>Supplies Co. Ltd</p>
-        </div>
-    </div>
-    <!-- زر النزول للأسفل -->
-    
-</header>
+        <!-- محتوى الهيدر -->
+        <div class="header-content">
+            <!-- القائمة العلوية -->
+            <nav>
+                <ul class="nav-list">
+                    <li>About us</li>
+                    <li>Solutions</li>
+                    <li>Partners</li>
+                    <li>Our Clients</li>
+                    <li>Contact</li>
+                </ul>
+            </nav>
 
+            <!-- النص الرئيسي في الهيدر -->
+            <div class="hero-text">
+                <h1>Terma Medical</h1>
+                <p>Supplies Co. Ltd</p>
+            </div>
+        </div>
+    </header>
+    <!-- قسم الفيديو (Hero Section) -->
+     
 
 <!-- قسم التعريف بالشركة -->
  
