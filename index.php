@@ -1,3 +1,23 @@
+<?php
+session_start();
+include 'db.php';
+
+// التحقق من حالة تسجيل الدخول
+$logged_in = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+
+// إذا كان المستخدم مسجلاً الدخول، جلب تفاصيل المستخدم
+if ($logged_in) {
+    $account_type = $_SESSION['account_type']; // نوع الحساب: student, company, admin
+    $email = $_SESSION['email'];
+    $user_id = $_SESSION['user_id'];
+} else {
+    $account_type = null;
+    $username = null;
+    $user_id = null;
+}
+
+print_r($_SESSION);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,11 +143,24 @@
     <header>
         <nav>
             <ul>
+          
                 <li>About us</li>
                 <li>Solutions</li>
                 <li>Partners</li>
                 <li>Our Clients</li>
                 <li>Contact</li>
+                <?php if ($logged_in): ?>
+            <?php if ($account_type === 'customer'): ?>
+              <li class="nav-item"><a href="pages/students/student_profile.php" class="nav-link">Profile</a></li>
+            <?php elseif ($account_type === 'employee'): ?>
+              <li class="nav-item"><a href="pages/company/profail.php" class="nav-link">Control</a></li>
+            <?php elseif ($account_type === 'admin'): ?>
+              <li class="nav-item"><a href="admin/admin_dashboard.php" class="nav-link">Admin Panel</a></li>
+            <?php endif; ?>
+            <li class="nav-item"><a href="pages/logout.php" class="nav-link">Logout</a></li>
+          <?php else: ?>
+            <li ><a href="pages/login.php" class="nav-link">Login</a></li>
+          <?php endif; ?>
             </ul>
         </nav>
     </header>
@@ -139,6 +172,7 @@
         <div class="content">
             <h1>Terma Medical</h1>
             <p>Supplies Co. Ltd</p>
+            <a href="pages/login.php">login</a>
         </div>
         <a href="#section1" class="scroll-down">Scroll Down</a>
     </div>
