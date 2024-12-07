@@ -1,182 +1,76 @@
-<?php
-session_start();
-include 'db.php';
-
-// التحقق من حالة تسجيل الدخول
-$logged_in = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
-
-// إذا كان المستخدم مسجلاً الدخول، جلب تفاصيل المستخدم
-if ($logged_in) {
-    $account_type = $_SESSION['account_type']; // نوع الحساب: student, company, admin
-    $email = $_SESSION['email'];
-    $user_id = $_SESSION['user_id'];
-} else {
-    $account_type = null;
-    $username = null;
-    $user_id = null;
-}
-
-print_r($_SESSION);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Homepage</title>
+    <!-- الخطوط -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            color: #333;
-        }
-        header {
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 10px 20px;
-            z-index: 1000;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 0;
-            padding: 0;
-        }
-        nav ul li {
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .hero {
-            position: relative;
-            text-align: center;
-            color: white;
-        }
-        .hero video {
-            width: 100%;
-            height: 100vh;
-            object-fit: cover;
-        }
-        .hero .content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-        .hero .content h1 {
-            font-size: 4rem;
-            margin: 0;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-        }
-        .hero .content p {
-            font-size: 1.5rem;
-        }
-        .scroll-down {
-            position: absolute;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, background 0.3s;
-        }
-        .scroll-down:hover {
-            transform: translateX(-50%) scale(1.1);
-            background: rgba(255, 255, 255, 1);
-        }
-        .section {
-            padding: 50px;
-            text-align: center;
-            background: #f4f4f4;
-        }
-        .section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .card {
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-        .card:hover {
-            transform: scale(1.05);
-        }
-        footer {
-            background: #222;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        footer .links {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 20px;
-        }
-        footer .links div {
-            text-align: left;
-        }
-        footer .links div h4 {
-            margin-bottom: 10px;
-        }
-    </style>
+    <!-- استدعاء ملف CSS -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-          
-                <li>About us</li>
-                <li>Solutions</li>
-                <li>Partners</li>
-                <li>Our Clients</li>
-                <li>Contact</li>
-                <?php if ($logged_in): ?>
-            <?php if ($account_type === 'customer'): ?>
-              <li class="nav-item"><a href="pages/students/student_profile.php" class="nav-link">Profile</a></li>
-            <?php elseif ($account_type === 'employee'): ?>
-              <li class="nav-item"><a href="pages/company/profail.php" class="nav-link">Control</a></li>
-            <?php elseif ($account_type === 'admin'): ?>
-              <li class="nav-item"><a href="admin/admin_dashboard.php" class="nav-link">Admin Panel</a></li>
-            <?php endif; ?>
-            <li class="nav-item"><a href="pages/logout.php" class="nav-link">Logout</a></li>
-          <?php else: ?>
-            <li ><a href="pages/login.php" class="nav-link">Login</a></li>
-          <?php endif; ?>
-            </ul>
-        </nav>
-    </header>
-
-    <div class="hero">
-        <video autoplay loop muted>
+    <!-- الهيدر مع الفيديو كخلفية -->
+    <header class="video-header">
+        <!-- فيديو الخلفية -->
+        <video autoplay loop muted playsinline class="background-video">
             <source src="vido/Comp-1.mp4" type="video/mp4">
         </video>
-        <div class="content">
-            <h1>Terma Medical</h1>
-            <p>Supplies Co. Ltd</p>
-            <a href="pages/login.php">login</a>
-        </div>
-        <a href="#section1" class="scroll-down">Scroll Down</a>
-    </div>
 
+        <!-- محتوى الهيدر -->
+        <div class="header-content">
+            <!-- القائمة العلوية -->
+            <nav>
+                <ul class="nav-list">
+                    <li>About us</li>
+                    <li>Solutions</li>
+                    <li>Partners</li>
+                    <li>Our Clients</li>
+                    <li>Contact</li>
+                </ul>
+            </nav>
+
+            <!-- النص الرئيسي في الهيدر -->
+            <div class="hero-text">
+                <h1>Terma Medical</h1>
+                <p>Supplies Co. Ltd</p>
+            </div>
+        </div>
+    </header>
+    <!-- قسم الفيديو (Hero Section) -->
+     
+
+    <!-- قسم التعريف بالشركة -->
+    <section class="about-section">
+        <div class="container">
+            <h3 class="section-title">KNOW US</h3>
+            <h2 class="main-title">Who We Are</h2>
+            <p class="description">
+                Terma Medical is the leading healthcare solutions provider in Khartoum Sudan. Over the years, we have partnered with the world’s most renowned healthcare companies that offer the best-in-class solutions and finest technology. Through ongoing and sustainable improvements, we can provide solutions that generate significant value for healthcare providers and their patients.
+            </p>
+            <div class="stats">
+                <div class="stat">
+                    <img src="icom/count-icon-3.webp" alt="Partners Icon" class="icon">
+                    <h3>+200</h3>
+                    <p>Employees</p>
+                </div>
+                <div class="stat">
+                    <img src="icom/count-icon-2.webp" alt="Employees Icon" class="icon">
+                    <h3>+600</h3>
+                    <p>Products</p>
+                </div>
+                <div class="stat">
+                    <img src="icom/count-icon-1-150x103.webp" alt="Products Icon" class="icon">
+                    <h3>+70,000</h3>
+                    <p>Partners</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <!-- قسم الحلول -->
     <div id="section1" class="section">
         <h2>Our Solutions</h2>
         <div class="grid">
@@ -187,24 +81,106 @@ print_r($_SESSION);
         </div>
     </div>
 
-    <footer>
-        <div class="links">
-            <div>
-                <h4>About Us</h4>
-                <p>Who We Are</p>
-                <p>Our Partners</p>
+
+
+
+    <!-- قسم عملاؤنا -->
+<section id="clients-section" class="clients-section">
+    <div class="container">
+        <h3 class="section-title">OUR CLIENTS</h3>
+        <h2 class="main-title">Trusted By</h2>
+        <p class="description">
+            We are proud to serve many clients across various sectors who trust our expertise and solutions.
+        </p>
+        <div class="clients-logos">
+            <div class="client-logo">
+                <img src="img/clients-section/snibe.jpg" alt="Client 1">
             </div>
-            <div>
-                <h4>Quick Links</h4>
-                <p>Solutions</p>
-                <p>Contact</p>
+            <div class="client-logo">
+                <img src="img/clients-section/facebook.jpg" alt="Client 2">
             </div>
-            <div>
-                <h4>Contact Us</h4>
-                <p>+966 11 2168222</p>
+            <div class="client-logo">
+                <img src="img/clients-section/1.-MACB-Logo-e1661311662815.png" alt="Client 3">
+            </div>
+            <div class="client-logo">
+                <img src="img/clients-section/IMG-20240118-WA0093.jpg" alt="Client 4">
+            </div>
+            <div class="client-logo">
+                <img src="img/clients-section/download.png" alt="Client 5">
             </div>
         </div>
-        <p>&copy; 2024 Terma. All Rights Reserved.</p>
-    </footer>
+    </div>
+</section>
+
+
+
+
+<img src="img/s.png">
+
+<!-- قسم شركاؤنا -->
+<section id="partners-section" class="partners-section">
+    <div class="container">
+        <h3 class="section-title">OUR PARTNERS</h3>
+        <h2 class="main-title">Quality & Trusted Partners</h2>
+        <p class="description">
+            Our partners are the backbone of our business, providing quality and innovative solutions that help us serve our clients better.
+        </p>
+        <div class="partners-logos">
+            <div class="partner-logo">
+                <img src="img/partners-section/Logos2-94.png" alt="Partner 1">
+            </div>
+            <div class="partner-logo">
+                <img src="img/partners-section/Logos2-95.png" alt="Partner 2">
+            </div>
+            <div class="partner-logo">
+                <img src="img/partners-section/Logos2-96.png" alt="Partner 3">
+            </div>
+            <div class="partner-logo">
+                <img src="img/partners-section/Logos2-98.png" alt="Partner 4">
+            </div>
+            <div class="partner-logo">
+                <img src="img/partners-section/Logos2-99.png" alt="Partner 5">
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- الفوتر (Footer) -->
+
+   
+
+    <footer class="footer">
+        <div class="footer-container">
+        <div class="footer-column">
+            <h4>Contact Us</h4>
+            <p>Headquarters</p>
+            <p>Khartoum Sudan , Khartoum, Sudan, 11111</p>
+            <p>Tel. +249 91 007 0078</p>
+            
+        </div>
+        <div class="footer-column">
+            <h4>About Us</h4>
+            <p>Who We Are</p>
+            <p>CEO’s Message</p>
+            <p>Business Methodology</p>
+        </div>
+        <div class="footer-column">
+            <h4>Quick Links</h4>
+            <p>Our Solutions</p>
+            <p>Our Partners</p>
+            <p>Our Clients</p>
+            <p>Careers</p>
+        </div>
+        <div class="footer-column">
+            <h4>Support</h4>
+            <p>Contact Us</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>Terma Medical Supplies Co.Ltd 
+            © All Rights Reserved</p>
+    </div>
+</footer>
+
 </body>
 </html>
