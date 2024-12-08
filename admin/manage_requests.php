@@ -1,6 +1,10 @@
 <?php
+error_reporting(E_ALL); // عرض جميع الأخطاء
+ini_set('display_errors', 1); // تمكين عرض الأخطاء
+ini_set('display_startup_errors', 1); 
 include '../db.php';
 session_start();
+echo realpath('../uploads/categories/');
 
 if (isset($_SESSION['user_id'])) {
     $username = $_SESSION['email'];

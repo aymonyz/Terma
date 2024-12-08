@@ -29,6 +29,18 @@ if ($result->num_rows > 0) {
         $categories[] = $row;
     }
 }
+$query = "SELECT * FROM categories";
+$result = $conn->query($query);
+
+$categories = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $categories[] = $row;
+    }
+} else {
+    echo "لا توجد تصنيفات متاحة.";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -138,32 +150,90 @@ if ($result->num_rows > 0) {
 
    
 
-
-
-    <!-- قسم الحلول -->
-    <div id="section1" class="section">
-    <h2>How We Can Help You</h2>
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <?php foreach ($categories as $category): ?>
-                <div class="swiper-slide">
-                    <a href="<?php echo htmlspecialchars($category['category_name']); ?>" class="no-lightbox">
-                        <img loading="lazy" decoding="async" width="372" height="483" 
-                            src="<?php echo htmlspecialchars($category['category_image']); ?>" 
-                            alt="<?php echo htmlspecialchars($category['category_name']); ?>" 
-                            class="category-img">
-                    </a>
-                    <div class="card-title"><?php echo htmlspecialchars($category['category_name']); ?></div>
-                </div>
-            <?php endforeach; ?>
+    <div id="section1" class="section py-5" style="background-color: #f9f9f9;">
+    <div class="container">
+        <h2 class="text-center mb-4" style="font-family: 'Tajawal', sans-serif; font-weight: bold; color: #343a40;">
+            How We Can Help You
+        </h2>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <?php foreach ($categories as $category): ?>
+                    <?php if (!empty($category['id'])): ?>
+                        <div class="swiper-slide" style="padding: 15px;">
+                            <a href="category_devices.php?category_id=<?php echo htmlspecialchars($category['id']); ?>" 
+                               class="no-lightbox" 
+                               style="text-decoration: none;">
+                                <div class="card h-100 shadow-sm" 
+                                     style="border-radius: 10px; overflow: hidden; background: #fff;">
+                                    <img loading="lazy" decoding="async" width="100%" height="auto" 
+                                        src="<?php echo htmlspecialchars($category['category_image'] ?? 'default-image.png'); ?>" 
+                                        alt="<?php echo htmlspecialchars($category['category_name'] ?? 'Unnamed Category'); ?>" 
+                                        class="card-img-top category-img" 
+                                        style="height: 300px; object-fit: cover;">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title" style="font-weight: bold; color: #007bff;">
+                                            <?php echo htmlspecialchars($category['category_name'] ?? 'Unnamed Category'); ?>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <div class="swiper-slide" style="padding: 15px;">
+                            <div class="card h-100 shadow-sm" 
+                                 style="border-radius: 10px; overflow: hidden; background: #fff;">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title" style="font-weight: bold; color: #dc3545;">
+                                        Category Not Available
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+            <!-- أزرار التنقل -->
+            <div class="swiper-button-next" style="color: #007bff;"></div>
+            <div class="swiper-button-prev" style="color: #007bff;"></div>
+            <!-- نقاط التنقل -->
+            <div class="swiper-pagination"></div>
         </div>
-        <!-- أزرار التنقل -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <!-- نقاط التنقل -->
-        <div class="swiper-pagination"></div>
     </div>
 </div>
+
+<!-- إضافة مكتبة Swiper -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+<!-- تهيئة Swiper -->
+<script>
+    const swiper = new Swiper('.swiper-container', {
+        loop: true,
+        slidesPerView: 3,
+        spaceBetween: 20,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 1,
+            },
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            },
+        },
+    });
+</script>
+
+
 
     <!-- <div class="elementor-element elementor-element-e8d69c6 elementor-widget elementor-widget-theme-post-featured-image elementor-widget-image"
         data-id="e8d69c6" data-element_type="widget" data-widget_type="theme-post-featured-image.default">
