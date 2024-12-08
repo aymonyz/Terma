@@ -6,69 +6,49 @@ session_start();
 include '../db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // استقبال البيانات من الفورم
     $accountType = $conn->real_escape_string($_POST['accountType']);
     $email = $conn->real_escape_string($_POST['email']);
     $password = $conn->real_escape_string($_POST['pass']);
 
-    // اختيار الجدول بناءً على نوع الحساب
-    $table = "";
-    if ($accountType == 'admin') {
-        $table = "admin"; // جدول المدراء
-    } elseif ($accountType == 'employee') {
-        $table = "emp"; // جدول الموظفين
-    } elseif ($accountType == 'customer') {
-        $table = "user"; // جدول العملاء
-    } else {
-        echo "<script>
-                alert('Invalid account type selected.');
-              </script>";
-        exit();
-    }
+    $table = ($accountType === 'admin') ? "admin" : (($accountType === 'employee') ? "emp" : "user");
 
-    // استعلام للتحقق من بيانات تسجيل الدخول من الجدول المختار
     $sql = "SELECT * FROM $table WHERE email = '$email'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        // جلب البيانات من قاعدة البيانات
+    if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
-
-        // التحقق من كلمة المرور
         if (password_verify($password, $row['password'])) {
-            // تعيين الجلسة
             $_SESSION['loggedin'] = true;
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['account_type'] = $accountType;
 
-            // إعادة التوجيه بناءً على نوع الحساب
-            if ($accountType == 'admin') {
-                header("Location: ../admin/admin_dashboard.php"); // تعديل مسار صفحة المدير
-
-            } elseif ($accountType == 'employee') {
-                header("Location: ../index.php");
-            } else {
-                header("Location: ../index.php");
-            }
+            $redirectPage = ($accountType === 'admin') ? "../admin/admin_dashboard.php" : "../index.php";
+            header("Location: $redirectPage");
             exit();
         } else {
-            // كلمة المرور غير صحيحة
             echo "<script>
-                    alert('Invalid password. Please try again.');
-                  </script>";
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Invalid password!'
+                });
+            </script>";
         }
     } else {
-        // اسم المستخدم غير صحيح
         echo "<script>
-                alert('Invalid username or account type. Please try again.');
-              </script>";
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Email not found!'
+            });
+        </script>";
     }
 
-    // إغلاق الاتصال بقاعدة البيانات
     $conn->close();
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -80,12 +60,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 
   <!-- Favicon -->
   <link href="img/favicon.ico" rel="icon">
 
   <!-- Google Web Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
 
@@ -152,6 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+
   <section class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
     <div class="container">
       <div class="row justify-content-center">
@@ -214,6 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <!-- JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  
 </body>
 
 </html>

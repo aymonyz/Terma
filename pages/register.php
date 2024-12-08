@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
         body {
@@ -76,59 +77,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $city = $conn->real_escape_string($_POST['city']);
     $job_title = $conn->real_escape_string($_POST['job_title']);
     $created_at = date("Y-m-d H:i:s");
-
+    
     // التحقق من وجود البريد الإلكتروني مسبقًا
     $check_email = "SELECT * FROM user WHERE email = '$email'";
     $result = $conn->query($check_email);
-
+    
     if ($result->num_rows > 0) {
         echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'This email is already registered. Please use a different email!'
-                });
-              </script>";
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'This email is already registered. Please use a different email!'
+        });
+        </script>";
     } else {
         $sql = "INSERT INTO user (first_name, last_name, email, password, gender, birth_date, phone, city, job_title, created_at)
                 VALUES ('$first_name', '$last_name', '$email', '$password', '$gender', '$birth_date', '$phone', '$city', '$job_title', '$created_at')";
 
-        if ($conn->query($sql) === TRUE) {
-            echo "<script>
-                    Swal.fire({
-                        title: 'Registration Successful!',
-                        text: 'Your account has been created successfully. You can now log in.',
-                        icon: 'success',
-                        confirmButtonText: 'Log In'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = 'login.php';
-                        }
-                    });
-                  </script>";
-        } else {
-            echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'Something went wrong. Please try again later.'
-                    });
-                  </script>";
+if ($conn->query($sql) === TRUE) {
+    echo "<script>
+    Swal.fire({
+        title: 'Registration Successful!',
+        text: 'Your account has been created successfully. You can now log in.',
+        icon: 'success',
+        confirmButtonText: 'Log In'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'login.php';
         }
-    }
+    });
+    </script>";
+} else {
+    echo "<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Something went wrong. Please try again later.'
+    });
+    </script>";
+}
+}
 
-    $conn->close();
+$conn->close();
 }
 ?>
 
 
 
-            <form method="POST" action="">
-                <div class="mb-3">
-                    <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
+<form method="POST" action="">
+    <div class="mb-3">
+        <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
+    </div>
+    <div class="mb-3">
+        <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
                 </div>
                 <div class="mb-3">
                     <input type="email" name="email" class="form-control" placeholder="Email" required>
@@ -165,7 +166,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
 
 </body>
 </html>

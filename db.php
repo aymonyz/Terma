@@ -1,15 +1,19 @@
 <?php
-$servername = 'localhost';
-$name = 'root';
-$Password = '';
+// إعدادات الاتصال بقاعدة البيانات
+$servername = '127.0.0.1';
+$username = 'root';
+$password = '';
 $dbname = "terma";
 
-$conn = new mysqli($servername, $name, $Password, $dbname);
-// $conn->set_charset("utf-8");
+// إنشاء اتصال
+$conn = new mysqli($servername, $username, $password, $dbname);
 
+// التحقق من وجود أخطاء في الاتصال
 if ($conn->connect_error) {
-    die("error: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
-echo "";
+// تعيين مجموعة الأحرف إلى utf8
+$conn->set_charset("utf8");
+
 ?>
