@@ -1,4 +1,5 @@
 <?php
+session_start();
 // تضمين الاتصال بقاعدة البيانات
 include 'db.php';
 
@@ -69,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     echo json_encode(['success' => true, 'cart_count' => count($_SESSION['cart'])]);
     exit;
 }
-
+//  print_r($_SESSION);
 // حذف منتج من السلة
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) {
     $product_id = intval($_POST['product_id']);
@@ -92,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
 
@@ -205,8 +207,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
             <?php if ($category_id): ?>
                 الأجهزة في تصنيف: <?php echo htmlspecialchars($category['category_name']); ?>
             <?php else: ?>
-                جميع الأجهزة
-            <?php endif; ?>
+                <h2> جميع الاجهزة</h2>
+                <?php endif; ?>
         </h1>
 <!-- المنتجات -->
 <div class="row">
@@ -224,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
                             data-id="<?php echo $device['id']; ?>" 
                             data-name="<?php echo htmlspecialchars($device['device_name']); ?>" 
                             data-price="<?php echo htmlspecialchars($device['price']); ?>">
-                        إضافة للسلة
+                            إضافة إلى السلة <i class="fa-solid fa-cart-shopping"></i>
                     </button>
                 </div>
             </div>
@@ -235,6 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 <!-- زر لفتح السلة -->
 <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#cartModal">
     عرض السلة (<span id="cart-count"><?php echo count($_SESSION['cart'] ?? []); ?></span>)
+   
 </button>
 
 <!-- نافذة السلة -->
@@ -247,11 +250,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
             </div>
             <div class="modal-body">
                 <ul id="cart-items" class="list-group">
-                    <?php if (!empty($_SESSION['cart'])): ?>
+                    <?php if (!empty($_SESSION['cart'])):  ?>
+                        
                         <?php foreach ($_SESSION['cart'] as $item): ?>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <?php echo htmlspecialchars($item['name']); ?>
-                                <span class="badge bg-primary rounded-pill"><?php echo $item['quantity']; ?></span>
+                                <span class="badge bg-primary rounded-pill"><?php echo $item['quantity'] ?? ''; ?></span>
                                 <button class="btn btn-danger btn-sm remove-from-cart" 
                                         data-id="<?php echo $item['id']; ?>">حذف</button>
                             </li>
@@ -283,13 +287,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
             </div>
             <div class="modal-body">
                 <!-- محتوى السلة -->
-                <?php if (!empty($cart_items)): ?>
+                <?php if (!empty($_SESSION['cart'])): ?>
                 <ul class="list-group">
-                    <?php foreach ($cart_items as $item): ?>
+                    <?php foreach ($_SESSION['cart'] as $item): ?>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <?php echo htmlspecialchars($item['name']); ?>
                         <span
                             class="badge bg-primary rounded-pill"><?php echo htmlspecialchars($item['quantity']); ?></span>
+                        <button class="btn btn-danger btn-sm remove-from-cart" data-id="<?php echo $item['id']; ?>">
+                            حذف
+                        </button>
                     </li>
                     <?php endforeach; ?>
                 </ul>
@@ -342,7 +349,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
         const productName = button.getAttribute('data-name');
         const productPrice = button.getAttribute('data-price');
 
-        fetch('category_devices.php', {
+        fetch('cart.php', { // رابط ملف PHP المسؤول عن إضافة المنتج
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -358,7 +365,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
         .then(data => {
             if (data.success) {
                 document.getElementById('cart-count').innerText = data.cart_count;
-                alert('تمت إضافة المنتج للسلة بنجاح!');
+                alert('تمت إضافة المنتج إلى السلة بنجاح!');
             } else {
                 alert('حدث خطأ أثناء الإضافة.');
             }
@@ -368,7 +375,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
         });
     });
 });
-
 document.querySelectorAll('.remove-from-cart').forEach(button => {
     button.addEventListener('click', () => {
         const productId = button.getAttribute('data-id');
@@ -390,6 +396,42 @@ document.querySelectorAll('.remove-from-cart').forEach(button => {
                 button.closest('.list-group-item').remove();
                 alert('تمت إزالة المنتج من السلة.');
             } else {
+                alert('حدث خطأ أثناء الحذف.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+document.querySelectorAll('.remove-from-cart').forEach(button => {
+    button.addEventListener('click', () => {
+        const productId = button.getAttribute('data-id');
+
+        // إرسال طلب الحذف إلى cart.php
+        fetch('cart.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                remove_from_cart: true,
+                product_id: productId,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // تحديث عدد العناصر في السلة
+                document.getElementById('cart-count').innerText = data.cart_count;
+
+                // إزالة العنصر من قائمة العرض
+                button.closest('.list-group-item').remove();
+
+                // عرض رسالة نجاح
+                alert('تمت إزالة المنتج من السلة.');
+            } else {
+                // عرض رسالة خطأ
                 alert('حدث خطأ أثناء الحذف.');
             }
         })
