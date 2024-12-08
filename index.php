@@ -1,34 +1,25 @@
 <?php
-error_reporting(E_ALL); // عرض جميع الأخطاء
-ini_set('display_errors', 1); // تمكين عرض الأخطاء
-ini_set('display_startup_errors', 1); 
+// تفعيل عرض الأخطاء
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
 session_start();
 include 'db.php';
 
 // التحقق من حالة تسجيل الدخول
 $logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
-// echo $logged_in;
-// إذا كان المستخدم مسجلاً الدخول، جلب تفاصيل المستخدم
+
 if ($logged_in) {
+    // جلب تفاصيل المستخدم إذا كان مسجلاً الدخول
     $account_type = $_SESSION['account_type']; 
     $email = $_SESSION['email'];
     $user_id = $_SESSION['user_id'];
 } else {
-    
     $_SESSION['loggedin'] = false;
 }
 
-
-// لطباعة الجلسة للتحقق
-$query = "SELECT category_name, category_image FROM categories";
-$result = $conn->query($query);
-
-$categories = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $categories[] = $row;
-    }
-}
+// جلب جميع التصنيفات من قاعدة البيانات
 $query = "SELECT * FROM categories";
 $result = $conn->query($query);
 
@@ -40,8 +31,8 @@ if ($result->num_rows > 0) {
 } else {
     echo "لا توجد تصنيفات متاحة.";
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -206,46 +197,8 @@ if ($result->num_rows > 0) {
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
 <!-- تهيئة Swiper -->
-<script>
-    const swiper = new Swiper('.swiper-container', {
-        loop: true,
-        slidesPerView: 3,
-        spaceBetween: 20,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        breakpoints: {
-            640: {
-                slidesPerView: 1,
-            },
-            768: {
-                slidesPerView: 2,
-            },
-            1024: {
-                slidesPerView: 3,
-            },
-        },
-    });
-</script>
 
 
-
-    <!-- <div class="elementor-element elementor-element-e8d69c6 elementor-widget elementor-widget-theme-post-featured-image elementor-widget-image"
-        data-id="e8d69c6" data-element_type="widget" data-widget_type="theme-post-featured-image.default">
-        <div class="elementor-widget-container">
-            <a href="https://aljeel.com/medical-equipment/" class="no-lightbox">
-                <img loading="lazy" decoding="async" width="372" height="483"
-                    src="https://aljeel.com/wp-content/uploads/2022/11/Medical-Equipment.png"
-                    class="attachment-full size-full wp-image-2165" alt=""
-                    srcset="https://aljeel.com/wp-content/uploads/2022/11/Medical-Equipment.png 372w, https://aljeel.com/wp-content/uploads/2022/11/Medical-Equipment-231x300.png 231w"
-                    sizes="(max-width: 372px) 100vw, 372px"> </a>
-        </div>
-    </div> -->
 
 
 
@@ -280,7 +233,28 @@ if ($result->num_rows > 0) {
 
 
 
-    <img src="img/s.png">
+    <section id="partners-section" class="partners-section text-center">
+    <img src="img/s.png" alt="Partners" class="responsive-img">
+</section>
+
+<style>
+    .partners-section {
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+
+    .responsive-img {
+        max-width: 100%; /* لضمان أن الصورة لا تتجاوز عرض القسم */
+        height: auto;    /* للحفاظ على النسبة بين العرض والطول */
+        display: inline-block;
+    }
+
+    /* لتوسيط الصورة */
+    .partners-section {
+        text-align: center;
+    }
+</style>
+
 
     <!-- قسم شركاؤنا -->
     <section id="partners-section" class="partners-section">
@@ -402,7 +376,7 @@ if ($result->num_rows > 0) {
             clickable: true,
         },
         autoplay: {
-            delay: 3000, // التمرير التلقائي كل 3 ثواني
+            delay: 1000, // التمرير التلقائي كل 3 ثواني
             disableOnInteraction: false, // استمرار التمرير التلقائي بعد التفاعل
         },
         slidesPerView: 3, // عدد العناصر المرئية
