@@ -110,6 +110,7 @@
 
     <!-- Navbar -->
     <div class="navbar">
+<<<<<<< HEAD
     <div class="d-flex align-items-center">
         <a href="admin_dashboard.php" class="d-flex align-items-center">
             <i class="fas fa-home me-2"></i> لوحة القيادة
@@ -132,6 +133,27 @@
         <a href="../index.php" class="d-flex align-items-center">
             <i class="fas fa-arrow-left me-2"></i> العودة
         </a>
+=======
+        <div class="d-flex align-items-center">
+            <a href="admin_dashboard.php" class="d-flex align-items-center">
+                <i class="fas fa-home me-2"></i> لوحة القيادة
+            </a>
+            <a href="admin_user.php" class="d-flex align-items-center">
+                <i class="fas fa-users me-2"></i> إدارة المستخدمين
+            </a>
+            <a href="manage_requests.php" class="d-flex align-items-center">
+                <i class="fas fa-tasks me-2"></i>   التصنيفات
+            </a>
+            <a href="../index.php" class="d-flex align-items-center">
+                <i class="fas fa-arrow-left me-2"></i> العودة
+            </a>
+            
+        </div>
+        <div class="d-flex align-items-center">
+            <span class="username"><i class="fas fa-user-circle me-2"></i> مرحباً، المدير</span>
+            <a href="?logout=true" class="logout-btn ms-3"><i class="fas fa-sign-out-alt me-2"></i> تسجيل الخروج</a>
+        </div>
+>>>>>>> 7a4a3e823a03d4f45b4117e3513b7a39d072481b
     </div>
     <div class="d-flex align-items-center">
         <span class="username"><i class="fas fa-user-circle me-2"></i> مرحباً، المدير</span>

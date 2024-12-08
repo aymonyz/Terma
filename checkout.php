@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'db.php'; // الاتصال بقاعدة البيانات
-print_r($_SESSION);
+// print_r($_SESSION);
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     header('Location: index.php'); // إعادة التوجيه إذا كانت السلة فارغة
     exit();

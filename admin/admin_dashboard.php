@@ -36,19 +36,19 @@ $total_device = $result_device->fetch_assoc()['device_jobs'];
 // $total_ads = $result_ads->fetch_assoc()['total_ads'];
 
 // // جلب عدد الطلبات المعلقة
-// $pending_requests_query = "SELECT COUNT(*) as pending_requests FROM job_applications WHERE status = 0";
-// $result_pending_requests = $conn->query($pending_requests_query);
-// $pending_requests = $result_pending_requests->fetch_assoc()['pending_requests'];
+$pending_requests_query = "SELECT COUNT(*) as pending_requests FROM orders WHERE status = 0";
+$result_pending_requests = $conn->query($pending_requests_query);
+$pending_requests = $result_pending_requests->fetch_assoc()['pending_requests'];
 
 // // جلب عدد الطلبات المقبولة
-// $approved_requests_query = "SELECT COUNT(*) as approved_requests FROM job_applications WHERE status = 1";
-// $result_approved_requests = $conn->query($approved_requests_query);
-// $approved_requests = $result_approved_requests->fetch_assoc()['approved_requests'];
+$approved_requests_query = "SELECT COUNT(*) as approved_requests FROM orders WHERE status = 1";
+$result_approved_requests = $conn->query($approved_requests_query);
+$approved_requests = $result_approved_requests->fetch_assoc()['approved_requests'];
 
 // // جلب عدد الطلبات المرفوضة
-// $rejected_requests_query = "SELECT COUNT(*) as rejected_requests FROM job_applications WHERE status = 2";
-// $result_rejected_requests = $conn->query($rejected_requests_query);
-// $rejected_requests = $result_rejected_requests->fetch_assoc()['rejected_requests'];
+$rejected_requests_query = "SELECT COUNT(*) as rejected_requests FROM orders WHERE status = 2";
+$result_rejected_requests = $conn->query($rejected_requests_query);
+$rejected_requests = $result_rejected_requests->fetch_assoc()['rejected_requests'];
 
 // // حساب العدد الكلي للمستخدمين
 $total_users = $user + $total_emp;

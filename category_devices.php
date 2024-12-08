@@ -255,6 +255,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <?php echo htmlspecialchars($item['name']); ?>
                                 <span class="badge bg-primary rounded-pill"><?php echo $item['quantity'] ?? ''; ?></span>
+                                <span class="badge bg-primary rounded-pill"><?php echo $item['price'] ?? ''; ?></span>
                                 <button class="btn btn-danger btn-sm remove-from-cart" 
                                         data-id="<?php echo $item['id']; ?>">حذف</button>
                             </li>
@@ -297,8 +298,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
                     <?php foreach ($_SESSION['cart'] as $item): ?>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <?php echo htmlspecialchars($item['name']); ?>
-                        <span
-                            class="badge bg-primary rounded-pill"><?php echo htmlspecialchars($item['quantity']); ?></span>
+                        <span class="badge bg-primary rounded-pill"><?php echo htmlspecialchars($item['quantity']); ?></span>
+                        <span class="badge bg-primary rounded-pill"><?php echo htmlspecialchars($item['product_price']); ?></span>
+
                         <button class="btn btn-danger btn-sm remove-from-cart" data-id="<?php echo $item['id']; ?>">
                             حذف
                         </button>

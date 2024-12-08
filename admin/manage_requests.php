@@ -4,6 +4,7 @@ include 'amin-Header.php';
 
 session_start();
 
+<<<<<<< HEAD
 // جلب الطلبات من قاعدة البيانات
 $purchase_requests = [];
 $requests_query = "
@@ -19,6 +20,146 @@ if ($result_requests && $result_requests->num_rows > 0) {
         $purchase_requests[] = $row;
     }
 }
+=======
+if (isset($_SESSION['user_id'])) {
+    $username = $_SESSION['email'];
+} else {
+    header("Location: ../index.php");
+    exit();
+}
+
+// تسجيل الخروج
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: ../index.php");
+    exit();
+}
+
+// إضافة تصنيف جديد
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
+    $category_name = $_POST['category_name'];
+    $category_image = null;
+
+    // معالجة رفع الصورة
+    if (!empty($_FILES['category_image']['name'])) {
+        $target_dir = "../uploads/categories/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true); // إنشاء المجلد إذا لم يكن موجوداً
+        }
+
+        $target_file = $target_dir . basename($_FILES['category_image']['name']);
+        $img = "uploads/categories/" . basename($_FILES['category_image']['name']);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $allowed_types = ["jpg", "jpeg", "png", "gif"];
+
+        if (in_array($imageFileType, $allowed_types)) {
+            if (move_uploaded_file($_FILES['category_image']['tmp_name'], $target_file)) {
+                $category_image = $img;
+            } else {
+                $error_message = "حدث خطأ أثناء رفع الصورة.";
+            }
+        } else {
+            $error_message = "فقط ملفات الصور (JPG, JPEG, PNG, GIF) مسموح بها.";
+        }
+    }
+
+    if (empty($error_message)) {
+        $insert_query = "INSERT INTO categories (category_name, category_image) VALUES (?, ?)";
+        $stmt = $conn->prepare($insert_query);
+        $stmt->bind_param("ss", $category_name, $category_image);
+        $stmt->execute();
+        $stmt->close();
+        $success_message = "تمت إضافة التصنيف بنجاح.";
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_category'])) {
+    $category_id = $_POST['category_id'];
+    $category_name = $_POST['category_name'];
+    $category_image = null;
+
+    // معالجة رفع الصورة أثناء التعديل
+    if (!empty($_FILES['category_image']['name'])) {
+        $target_dir = "../uploads/categories/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+
+        $target_file = $target_dir . basename($_FILES['category_image']['name']);
+        $img = "uploads/categories/" . basename($_FILES['category_image']['name']);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $allowed_types = ["jpg", "jpeg", "png", "gif"];
+
+        if (in_array($imageFileType, $allowed_types)) {
+            if (move_uploaded_file($_FILES['category_image']['tmp_name'], $target_file)) {
+                $category_image = $img;
+            } else {
+                $error_message = "حدث خطأ أثناء رفع الصورة.";
+            }
+        } else {
+            $error_message = "فقط ملفات الصور (JPG, JPEG, PNG, GIF) مسموح بها.";
+        }
+    }
+
+    if (empty($error_message)) {
+        if ($category_image) {
+            $update_query = "UPDATE categories SET category_name = ?, category_image = ? WHERE id = ?";
+            $stmt = $conn->prepare($update_query);
+            $stmt->bind_param("ssi", $category_name, $category_image, $category_id);
+        } else {
+            $update_query = "UPDATE categories SET category_name = ? WHERE id = ?";
+            $stmt = $conn->prepare($update_query);
+            $stmt->bind_param("si", $category_name, $category_id);
+        }
+        $stmt->execute();
+        $stmt->close();
+        $success_message = "تم تعديل التصنيف بنجاح.";
+    }
+}
+
+// حذف تصنيف
+if (isset($_GET['delete_category'])) {
+    $category_id = intval($_GET['delete_category']);
+    $delete_query = "DELETE FROM categories WHERE id = ?";
+    $stmt = $conn->prepare($delete_query);
+    $stmt->bind_param("i", $category_id);
+    $stmt->execute();
+    $stmt->close();
+    $success_message = "تم حذف التصنيف بنجاح.";
+}
+
+// جلب التصنيفات
+$categories = [];
+$query = "SELECT * FROM categories";
+$result = $conn->query($query);
+while ($row = $result->fetch_assoc()) {
+    $categories[] = $row;
+}
+
+// جلب الأجهزة
+$devices = [];
+$devices_query = "
+    SELECT devices.*, categories.category_name 
+    FROM devices 
+    LEFT JOIN categories ON devices.category_id = categories.id";
+$result_devices = $conn->query($devices_query);
+while ($row = $result_devices->fetch_assoc()) {
+    $devices[] = $row;
+}
+
+// جلب الطلبات
+// $purchase_requests = [];
+// $requests_query = "
+//     SELECT 
+//         purchase_requests.*, 
+//         devices.device_name 
+//     FROM purchase_requests 
+//     JOIN devices ON purchase_requests.device_id = devices.id";
+// $result_requests = $conn->query($requests_query);
+// while ($row = $result_requests->fetch_assoc()) {
+//     $purchase_requests[] = $row;
+// }
+>>>>>>> 7a4a3e823a03d4f45b4117e3513b7a39d072481b
 ?>
 
 <!DOCTYPE html>
