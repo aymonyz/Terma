@@ -110,25 +110,35 @@
 
     <!-- Navbar -->
     <div class="navbar">
-        <div class="d-flex align-items-center">
-            <a href="admin_dashboard.php" class="d-flex align-items-center">
-                <i class="fas fa-home me-2"></i> لوحة القيادة
-            </a>
-            <a href="admin_user.php" class="d-flex align-items-center">
-                <i class="fas fa-users me-2"></i> إدارة المستخدمين
-            </a>
-            <a href="manage_requests.php" class="d-flex align-items-center">
-                <i class="fas fa-tasks me-2"></i> إدارة الطلبات
-            </a>
-            <a href="../index.php" class="d-flex align-items-center">
-                <i class="fas fa-arrow-left me-2"></i> العودة
-            </a>
-        </div>
-        <div class="d-flex align-items-center">
-            <span class="username"><i class="fas fa-user-circle me-2"></i> مرحباً، المدير</span>
-            <a href="?logout=true" class="logout-btn ms-3"><i class="fas fa-sign-out-alt me-2"></i> تسجيل الخروج</a>
-        </div>
+    <div class="d-flex align-items-center">
+        <a href="admin_dashboard.php" class="d-flex align-items-center">
+            <i class="fas fa-home me-2"></i> لوحة القيادة
+        </a>
+        <a href="admin_user.php" class="d-flex align-items-center">
+            <i class="fas fa-users me-2"></i> إدارة المستخدمين
+        </a>
+        <a href="manage_requests.php" class="d-flex align-items-center">
+            <i class="fas fa-tasks me-2"></i> إدارة الطلبات
+        </a>
+        <a href="categories.php" class="d-flex align-items-center">
+            <i class="fas fa-folder-open me-2"></i> إدارة التصنيفات
+        </a>
+        <a href="emp.php" class="d-flex align-items-center">
+            <i class="fas fa-user-tie me-2"></i> إدارة الموظفين
+        </a>
+        <a href="devices.php" class="d-flex align-items-center">
+            <i class="fas fa-desktop me-2"></i> إدارة الأجهزة
+        </a>
+        <a href="../index.php" class="d-flex align-items-center">
+            <i class="fas fa-arrow-left me-2"></i> العودة
+        </a>
     </div>
+    <div class="d-flex align-items-center">
+        <span class="username"><i class="fas fa-user-circle me-2"></i> مرحباً، المدير</span>
+        <a href="?logout=true" class="logout-btn ms-3"><i class="fas fa-sign-out-alt me-2"></i> تسجيل الخروج</a>
+    </div>
+</div>
+
 
 
 

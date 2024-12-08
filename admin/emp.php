@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة المستخدمين</title>
+    <title>إدارة المستخدمين والموظفين</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -193,12 +193,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
 
     <!-- Main Content -->
     <div class="main-content">
-        <h2>إدارة المستخدمين</h2>
+        <h2>إدارة  الموظفين</h2>
 
         <!-- Users Section -->
+
+  
+
+        <!-- Employees Section -->
         <div class="table-container">
-       
-            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">إضافة مستخدم جديد</button>
+            
+            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">إضافة موظف جديد</button>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -213,57 +217,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($users as $user): ?>
+                    <?php foreach ($employees as $employee): ?>
                         <tr>
-                            <td><?= $user['id']; ?></td>
-                            <td><?= htmlspecialchars($user['first_name']); ?></td>
-                            <td><?= htmlspecialchars($user['last_name']); ?></td>
-                            <td><?= htmlspecialchars($user['email']); ?></td>
-                            <td><?= htmlspecialchars($user['phone']); ?></td>
-                            <td><?= htmlspecialchars($user['city']); ?></td>
-                            <td><?= htmlspecialchars($user['job_title']); ?></td>
+                            <td><?= $employee['id']; ?></td>
+                            <td><?= htmlspecialchars($employee['first_name']); ?></td>
+                            <td><?= htmlspecialchars($employee['last_name']); ?></td>
+                            <td><?= htmlspecialchars($employee['email']); ?></td>
+                            <td><?= htmlspecialchars($employee['phone']); ?></td>
+                            <td><?= htmlspecialchars($employee['city']); ?></td>
+                            <td><?= htmlspecialchars($employee['job_title']); ?></td>
                             <td>
-                                <a href="?delete_user=<?= $user['id']; ?>" class="btn btn-delete btn-sm">حذف</a>
-                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editUserModal<?= $user['id']; ?>">تعديل</button>
+                                <a href="?delete_employee=<?= $employee['id']; ?>" class="btn btn-delete btn-sm">حذف</a>
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editEmployeeModal<?= $employee['id']; ?>">تعديل</button>
                             </td>
                         </tr>
 
-                        <!-- Edit User Modal -->
-                        <div class="modal fade" id="editUserModal<?= $user['id']; ?>" tabindex="-1">
+                        <!-- Edit Employee Modal -->
+                        <div class="modal fade" id="editEmployeeModal<?= $employee['id']; ?>" tabindex="-1">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">تعديل بيانات المستخدم</h5>
+                                        <h5 class="modal-title">تعديل بيانات الموظف</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
                                         <form action="" method="POST">
-                                            <input type="hidden" name="id" value="<?= $user['id']; ?>">
+                                            <input type="hidden" name="id" value="<?= $employee['id']; ?>">
                                             <div class="mb-3">
                                                 <label>الاسم الأول</label>
-                                                <input type="text" name="first_name" class="form-control" value="<?= htmlspecialchars($user['first_name']); ?>" required>
+                                                <input type="text" name="first_name" class="form-control" value="<?= htmlspecialchars($employee['first_name']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label>الاسم الأخير</label>
-                                                <input type="text" name="last_name" class="form-control" value="<?= htmlspecialchars($user['last_name']); ?>" required>
+                                                <input type="text" name="last_name" class="form-control" value="<?= htmlspecialchars($employee['last_name']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label>البريد الإلكتروني</label>
-                                                <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($user['email']); ?>" required>
+                                                <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($employee['email']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label>رقم الهاتف</label>
-                                                <input type="text" name="phone" class="form-control" value="<?= htmlspecialchars($user['phone']); ?>" required>
+                                                <input type="text" name="phone" class="form-control" value="<?= htmlspecialchars($employee['phone']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label>المدينة</label>
-                                                <input type="text" name="city" class="form-control" value="<?= htmlspecialchars($user['city']); ?>" required>
+                                                <input type="text" name="city" class="form-control" value="<?= htmlspecialchars($employee['city']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label>الوظيفة</label>
-                                                <input type="text" name="job_title" class="form-control" value="<?= htmlspecialchars($user['job_title']); ?>" required>
+                                                <input type="text" name="job_title" class="form-control" value="<?= htmlspecialchars($employee['job_title']); ?>" required>
                                             </div>
-                                            <button type="submit" name="update_user" class="btn btn-primary">حفظ التعديلات</button>
+                                            <button type="submit" name="update_employee" class="btn btn-primary">حفظ التعديلات</button>
                                         </form>
                                     </div>
                                 </div>
@@ -274,12 +278,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
             </table>
         </div>
 
-        <!-- Add User Modal -->
-        <div class="modal fade" id="addUserModal" tabindex="-1">
+        <!-- Add Employee Modal -->
+        <div class="modal fade" id="addEmployeeModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">إضافة مستخدم جديد</h5>
+                        <h5 class="modal-title">إضافة موظف جديد</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -309,25 +313,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
                                 <input type="text" name="job_title" class="form-control" required>
                             </div>
                             <div class="mb-3">
-                                <label>تاريخ الميلاد</label>
-                                <input type="date" name="birth_date" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
                                 <label>كلمة المرور</label>
                                 <input type="password" name="password" class="form-control" required>
                             </div>
-                            <button type="submit" name="add_user" class="btn btn-success">إضافة</button>
+                            <button type="submit" name="add_employee" class="btn btn-success">إضافة</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Employees Section -->
-       
-
-        <!-- Add Employee Modal -->
-       
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

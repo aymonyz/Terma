@@ -142,7 +142,7 @@ $total_users = $user + $total_emp;
                 <div class="card text-center">
                     <h5 class="text-primary">الأجهزة</h5>
                     <p>عدد الأجهزة: <strong><?php echo $total_device; ?></strong></p>
-                    <a href="manage_requests.php" class="text-primary">عرض التفاصيل</a>
+                    <a href="devices.php" class="text-primary">عرض التفاصيل</a>
                 </div>
             </div>
             <!-- بطاقة المستخدمين -->
@@ -153,6 +153,14 @@ $total_users = $user + $total_emp;
                     <p>عدد العملاء: <strong><?php echo $user; ?></strong></p>
                     <p>عدد الموظفين: <strong><?php echo $total_emp; ?></strong></p>
                     <a href="admin_user.php" class="text-success">عرض التفاصيل</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <h5 class="text-success">التصنيفات</h5>
+                    <p>عدد التصنيفات: <strong><?php echo $categories; ?></strong></p>
+                    
+                    <a href="categories.php" class="text-success">عرض التفاصيل</a>
                 </div>
             </div>
             <!-- بطاقة الطلبات -->
