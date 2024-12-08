@@ -16,12 +16,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
 
-        $_SESSION['cart'][] = [
-            'id' => $product_id,
-            'name' => $product_name,
-            'price' => $product_price,
-            'quantity'=> 1,
-        ];
+        $product_exists = false;
+        foreach ($_SESSION['cart'] as &$item) {
+            if ($item['id'] === $product_id) {
+                $item['quantity'] += 1; // زيادة الكمية
+                $product_exists = true;
+                break;
+            }
+        }
+
+        // إذا لم يكن المنتج موجودًا، قم بإضافته
+        if (!$product_exists) {
+            $_SESSION['cart'][] = [
+                'id' => $product_id,
+                'name' => $product_name,
+                'price' => $product_price,
+                'quantity' => 1,
+            ];
+        }
 
         echo json_encode([
             'success' => true,

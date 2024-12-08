@@ -92,9 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
     <title>الأجهزة</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"> -->
 
 
     <style>
@@ -225,8 +225,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
                     <button class="btn btn-add-to-cart" 
                             data-id="<?php echo $device['id']; ?>" 
                             data-name="<?php echo htmlspecialchars($device['device_name']); ?>" 
-                            data-price="<?php echo htmlspecialchars($device['price']); ?>">
-                            إضافة إلى السلة <i class="fa-solid fa-cart-shopping"></i>
+                            data-price="<?php echo htmlspecialchars($device['price']); ?> ">
+                            إضافة إلى السلة <i class="fa-solid fa-cart-shopping  "></i>
                     </button>
                 </div>
             </div>
@@ -250,8 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
             </div>
             <div class="modal-body">
                 <ul id="cart-items" class="list-group">
-                    <?php if (!empty($_SESSION['cart'])):  ?>
-                        
+                    <?php if (!empty($_SESSION['cart'])): ?>
                         <?php foreach ($_SESSION['cart'] as $item): ?>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <?php echo htmlspecialchars($item['name']); ?>
@@ -264,6 +263,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
                         <p class="text-center">السلة فارغة.</p>
                     <?php endif; ?>
                 </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                <?php if (!empty($_SESSION['cart'])): ?>
+                    <a href="checkout.php" class="btn btn-primary">إتمام الشراء</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -313,42 +318,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 </div>
 
 <!-- إضافة Bootstrap CSS و JS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 </html>
+
+
+</body>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const swiper = new Swiper('.swiper-container', {
-        loop: true, // إعادة التشغيل بشكل دائري
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        autoplay: {
-            delay: 3000, // التمرير التلقائي كل 3 ثواني
-            disableOnInteraction: false, // استمرار التمرير التلقائي بعد التفاعل
-        },
-        slidesPerView: 3, // عدد العناصر المرئية
-        spaceBetween: 20, // المسافة بين العناصر
-        breakpoints: {
-            768: {
-                slidesPerView: 2,
-            },
-            480: {
-                slidesPerView: 1,
-            },
-        },
-    });
     document.querySelectorAll('.btn-add-to-cart').forEach(button => {
     button.addEventListener('click', () => {
         const productId = button.getAttribute('data-id');
         const productName = button.getAttribute('data-name');
         const productPrice = button.getAttribute('data-price');
-
+        console.log(productId);
         fetch('cart.php', { // رابط ملف PHP المسؤول عن إضافة المنتج
             method: 'POST',
             headers: {
@@ -375,35 +358,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
         });
     });
 });
-document.querySelectorAll('.remove-from-cart').forEach(button => {
-    button.addEventListener('click', () => {
-        const productId = button.getAttribute('data-id');
 
-        fetch('category_devices.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                remove_from_cart: true,
-                product_id: productId,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById('cart-count').innerText = data.cart_count;
-                button.closest('.list-group-item').remove();
-                alert('تمت إزالة المنتج من السلة.');
-            } else {
-                alert('حدث خطأ أثناء الحذف.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });
-});
 document.querySelectorAll('.remove-from-cart').forEach(button => {
     button.addEventListener('click', () => {
         const productId = button.getAttribute('data-id');
@@ -441,8 +396,32 @@ document.querySelectorAll('.remove-from-cart').forEach(button => {
     });
 });
 
-</script>
-
+    const swiper = new Swiper('.swiper-container', {
+        loop: true, // إعادة التشغيل بشكل دائري
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        autoplay: {
+            delay: 3000, // التمرير التلقائي كل 3 ثواني
+            disableOnInteraction: false, // استمرار التمرير التلقائي بعد التفاعل
+        },
+        slidesPerView: 3, // عدد العناصر المرئية
+        spaceBetween: 20, // المسافة بين العناصر
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+            },
+            480: {
+                slidesPerView: 1,
+            },
+        },
+    });
     
-</body>
+</script>
 </html>
+

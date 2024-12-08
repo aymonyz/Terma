@@ -6,7 +6,7 @@ ini_set('display_startup_errors', 1);
 
 session_start();
 include 'db.php';
-
+// print_r($_SESSION);
 // التحقق من حالة تسجيل الدخول
 $logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 
@@ -30,6 +30,14 @@ if ($result->num_rows > 0) {
     }
 } else {
     echo "لا توجد تصنيفات متاحة.";
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) {
+    $product_id = intval($_POST['product_id']);
+    $_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) use ($product_id) {
+        return $item['id'] != $product_id;
+    });
+    echo json_encode(['success' => true, 'cart_count' => count($_SESSION['cart'])]);
+    exit;
 }
 ?>
 
@@ -147,49 +155,50 @@ if ($result->num_rows > 0) {
             How We Can Help You
         </h2>
         <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <?php foreach ($categories as $category): ?>
-                    <?php if (!empty($category['id'])): ?>
-                        <div class="swiper-slide" style="padding: 15px;">
-                            <a href="category_devices.php?category_id=<?php echo htmlspecialchars($category['id']); ?>" 
-                               class="no-lightbox" 
-                               style="text-decoration: none;">
-                                <div class="card h-100 shadow-sm" 
-                                     style="border-radius: 10px; overflow: hidden; background: #fff;">
-                                    <img loading="lazy" decoding="async" width="100%" height="auto" 
-                                        src="<?php echo htmlspecialchars($category['category_image'] ?? 'default-image.png'); ?>" 
-                                        alt="<?php echo htmlspecialchars($category['category_name'] ?? 'Unnamed Category'); ?>" 
-                                        class="card-img-top category-img" 
-                                        style="height: 300px; object-fit: cover;">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title" style="font-weight: bold; color: #007bff;">
-                                            <?php echo htmlspecialchars($category['category_name'] ?? 'Unnamed Category'); ?>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    <?php else: ?>
-                        <div class="swiper-slide" style="padding: 15px;">
-                            <div class="card h-100 shadow-sm" 
-                                 style="border-radius: 10px; overflow: hidden; background: #fff;">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title" style="font-weight: bold; color: #dc3545;">
-                                        Category Not Available
-                                    </h5>
-                                </div>
+    <!-- أزرار التنقل -->
+   
+
+    <div class="swiper-wrapper">
+
+        <?php foreach ($categories as $category): ?>
+            <?php if (!empty($category['id'])): ?>
+                <div class="swiper-slide" style="padding: 15px;">
+                    <a href="category_devices.php?category_id=<?php echo htmlspecialchars($category['id']); ?>" 
+                       class="no-lightbox" 
+                       style="text-decoration: none;">
+                        <div class="card h-100 shadow-sm" 
+                             style="border-radius: 10px; overflow: hidden; background: #fff;">
+                            <img loading="lazy" decoding="async" width="100%" height="auto" 
+                                src="<?php echo htmlspecialchars($category['category_image'] ?? 'default-image.png'); ?>" 
+                                alt="<?php echo htmlspecialchars($category['category_name'] ?? 'Unnamed Category'); ?>" 
+                                class="card-img-top category-img" 
+                                style="height: 300px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title" style="font-weight: bold; color: #007bff;">
+                                    <?php echo htmlspecialchars($category['category_name'] ?? 'Unnamed Category'); ?>
+                                </h5>
                             </div>
                         </div>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </div>
-            <!-- أزرار التنقل -->
-            <div class="swiper-button-next" style="color: #007bff;"></div>
-            <div class="swiper-button-prev" style="color: #007bff;"></div>
-            <!-- نقاط التنقل -->
-            <div class="swiper-pagination"></div>
-        </div>
+                    </a>
+                </div>
+            <?php else: ?>
+                <div class="swiper-slide" style="padding: 15px;">
+                    <div class="card h-100 shadow-sm" 
+                         style="border-radius: 10px; overflow: hidden; background: #fff;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title" style="font-weight: bold; color: #dc3545;">
+                                Category Not Available
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
     </div>
+
+    <!-- نقاط التنقل -->
+</div>
+
 </div>
 
 <!-- إضافة مكتبة Swiper -->
@@ -322,13 +331,7 @@ if ($result->num_rows > 0) {
                 © All Rights Reserved</p>
         </div>
     </footer>
-
-</body>
-
-
-
-<!-- نافذة السلة (Modal) -->
-<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -336,34 +339,30 @@ if ($result->num_rows > 0) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- محتوى السلة -->
-                <?php if (!empty($cart_items)): ?>
-                <ul class="list-group">
-                    <?php foreach ($cart_items as $item): ?>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <?php echo htmlspecialchars($item['name']); ?>
-                        <span
-                            class="badge bg-primary rounded-pill"><?php echo htmlspecialchars($item['quantity']); ?></span>
-                    </li>
-                    <?php endforeach; ?>
+                <ul id="cart-items" class="list-group">
+                    <?php if (!empty($_SESSION['cart'])): ?>
+                        <?php foreach ($_SESSION['cart'] as $item): ?>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <?php echo htmlspecialchars($item['name']); ?>
+                                <span class="badge bg-primary rounded-pill"><?php echo $item['quantity'] ?? ''; ?></span>
+                                <button class="btn btn-danger btn-sm remove-from-cart" 
+                                        data-id="<?php echo $item['id']; ?>">حذف</button>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-center">السلة فارغة.</p>
+                    <?php endif; ?>
                 </ul>
-                <?php else: ?>
-                <p class="text-center">السلة فارغة.</p>
-                <?php endif; ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-                <a href="checkout.php" class="btn btn-primary">إتمام الشراء</a>
+                <?php if (!empty($_SESSION['cart'])): ?>
+                    <a href="checkout.php" class="btn btn-primary">إتمام الشراء</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </div>
-
-<!-- إضافة Bootstrap CSS و JS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-
-</html>
 <script>
     const swiper = new Swiper('.swiper-container', {
         loop: true, // إعادة التشغيل بشكل دائري
@@ -390,4 +389,52 @@ if ($result->num_rows > 0) {
             },
         },
     });
+    document.querySelectorAll('.remove-from-cart').forEach(button => {
+    button.addEventListener('click', () => {
+        const productId = button.getAttribute('data-id');
+
+        // إرسال طلب الحذف إلى cart.php
+        fetch('cart.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                remove_from_cart: true,
+                product_id: productId,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // تحديث عدد العناصر في السلة
+                document.getElementById('cart-count').innerText = data.cart_count;
+
+                // إزالة العنصر من قائمة العرض
+                button.closest('.list-group-item').remove();
+
+                // عرض رسالة نجاح
+                alert('تمت إزالة المنتج من السلة.');
+            } else {
+                // عرض رسالة خطأ
+                alert('حدث خطأ أثناء الحذف.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
 </script>
+
+</body>
+
+
+
+<!-- نافذة السلة (Modal) -->
+
+<!-- إضافة Bootstrap CSS و JS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>

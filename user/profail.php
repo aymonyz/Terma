@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="link-control">
     <a href="profail.php">الملف الشخصي</a>
     <a href="rest_password.php">تغيير كلمة السر</a>
-    <a href="requests_job.php">الطلبات</a>
+    <a href="orders.php">الطلبات</a>
     <a href="../index.php">الرئيسة</a>
 </div>
 <div class="container">

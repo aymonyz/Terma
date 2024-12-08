@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['account_type'] = $accountType;
+            
 
             $redirectPage = ($accountType === 'admin') ? "../admin/admin_dashboard.php" : "../index.php";
             header("Location: $redirectPage");
