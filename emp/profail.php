@@ -37,95 +37,142 @@ $stmt->execute();
 $employee = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - الموظف</title>
+    <title>لوحة التحكم</title>
+    <!-- خطوط وأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- استدعاء Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* تنسيق الصفحة */
         body {
+            font-family: 'Tajawal', sans-serif;
             background-color: #f8f9fa;
-            font-family: 'Heebo', sans-serif;
-        }
-
-        .btn-primary {
-            margin-top: 10px;
-        }
-
-        .container {
-            margin-top: 30px;
-            background: #fff;
+            color: #343a40;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        /* تنسيق لوحة التحكم */
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* الروابط في لوحة التحكم */
         .link-control {
             display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
             justify-content: space-around;
-            margin-top: 30px;
+            margin-bottom: 30px;
         }
 
         .link-control a {
             text-decoration: none;
-            color: white;
-            background: #0d6efd;
-            padding: 8px 10px;
-            border-radius: 18px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: #007bff;
+            color: #fff;
+            transition: 0.3s ease;
+        }
+
+        .link-control a:hover {
+            background-color: #0056b3;
+        }
+
+        .link-control a i {
+            margin-left: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .link-control {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .link-control a {
+                width: 80%;
+                text-align: center;
+            }
         }
     </style>
 </head>
 
 <body>
-<div class="link-control">
-    <a href="profail.php">الملف الشخصي</a>
-    <a href="password.php"> تعديل كلمة السر </a>
-    <a href="device.php"> الاجهزة</a>
-    <a href="request.php"> الطلبات</a>
-    <a href="../index.php"> الرئيسة</a>
-</div>
-<div class="container mt-4">
-    <h1>لوحة التحكم</h1>
+    <!-- لوحة التحكم -->
+    <div class="dashboard">
+        <h1>لوحة التحكم</h1>
+        <div class="link-control">
+            <a href="profail.php"><i class="fas fa-user"></i> الملف الشخصي</a>
+            <a href="password.php"><i class="fas fa-lock"></i> تعديل كلمة السر</a>
+            <a href="device.php"><i class="fas fa-laptop"></i> الأجهزة</a>
+            <a href="request.php"><i class="fas fa-clipboard-list"></i> الطلبات</a>
+            <a href="../index.php"><i class="fas fa-home"></i> الرئيسية</a>
+        </div>
+    </div>
 
-    <!-- رسالة نجاح -->
-    <?php if (!empty($success_message)): ?>
-        <div class="alert alert-success"><?php echo $success_message; ?></div>
-    <?php endif; ?>
-
-    <!-- تحديث البيانات الشخصية -->
-    <h3>تحديث بيانات الموظف</h3>
-    <form method="POST" class="mb-4">
-        <div class="mb-3">
-            <label for="first_name" class="form-label">الاسم الأول</label>
-            <input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo htmlspecialchars($employee['first_name']); ?>" required>
+    <!-- تحديث بيانات الموظف -->
+    <div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white">
+            <h4 class="text-center mb-0">تحديث بيانات الموظف</h4>
         </div>
-        <div class="mb-3">
-            <label for="last_name" class="form-label">الاسم الأخير</label>
-            <input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo htmlspecialchars($employee['last_name']); ?>" required>
+        <div class="card-body">
+            <form method="POST" class="p-4">
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">الاسم الأول</label>
+                    <input type="text" name="first_name" id="first_name" class="form-control" placeholder="أدخل الاسم الأول" value="<?php echo htmlspecialchars($employee['first_name']); ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">الاسم الأخير</label>
+                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="أدخل الاسم الأخير" value="<?php echo htmlspecialchars($employee['last_name']); ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">البريد الإلكتروني</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="أدخل البريد الإلكتروني" value="<?php echo htmlspecialchars($employee['email']); ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">رقم الهاتف</label>
+                    <input type="text" name="phone" id="phone" class="form-control" placeholder="أدخل رقم الهاتف" value="<?php echo htmlspecialchars($employee['phone']); ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="city" class="form-label">المدينة</label>
+                    <input type="text" name="city" id="city" class="form-control" placeholder="أدخل المدينة" value="<?php echo htmlspecialchars($employee['city']); ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="job_title" class="form-label">المسمى الوظيفي</label>
+                    <input type="text" name="job_title" id="job_title" class="form-control" placeholder="أدخل المسمى الوظيفي" value="<?php echo htmlspecialchars($employee['job_title']); ?>" required>
+                </div>
+                <button type="submit" name="update_profile" class="btn btn-success w-100">تحديث البيانات</button>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">البريد الإلكتروني</label>
-            <input type="email" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($employee['email']); ?>" required>
-        </div>
-        <div class="mb-3">
-            <label for="phone" class="form-label">رقم الهاتف</label>
-            <input type="text" name="phone" id="phone" class="form-control" value="<?php echo htmlspecialchars($employee['phone']); ?>" required>
-        </div>
-        <div class="mb-3">
-            <label for="city" class="form-label">المدينة</label>
-            <input type="text" name="city" id="city" class="form-control" value="<?php echo htmlspecialchars($employee['city']); ?>" required>
-        </div>
-        <div class="mb-3">
-            <label for="job_title" class="form-label">المسمى الوظيفي</label>
-            <input type="text" name="job_title" id="job_title" class="form-control" value="<?php echo htmlspecialchars($employee['job_title']); ?>" required>
-        </div>
-        <button type="submit" name="update_profile" class="btn btn-primary">تحديث</button>
-    </form>
+        <?php if (!empty($success_message)): ?>
+            <div class="alert alert-success m-4"><?php echo $success_message; ?></div>
+        <?php endif; ?>
+    </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- استدعاء Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

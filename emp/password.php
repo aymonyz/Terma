@@ -46,81 +46,137 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تغيير كلمة المرور</title>
+    <!-- استدعاء Bootstrap -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- استدعاء Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* تنسيق عام */
         body {
+            font-family: 'Tajawal', sans-serif;
             background-color: #f8f9fa;
-            font-family: 'Heebo', sans-serif;
+            color: #343a40;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        .container {
-            max-width: 600px;
-            margin-top: 50px;
-            background: #fff;
+        /* لوحة التحكم */
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .link-control {
             display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
             justify-content: space-around;
-            margin-top: 30px;
+            margin-bottom: 30px;
         }
 
         .link-control a {
             text-decoration: none;
-            color: white;
-            background: #0d6efd;
-            padding: 8px 10px;
-            border-radius: 18px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: #007bff;
+            color: #fff;
+            transition: 0.3s ease;
+        }
+
+        .link-control a:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 10px;
         }
     </style>
 </head>
 
 <body>
-<div class="link-control">
-    <a href="profail.php">الملف الشخصي</a>
-    <a href="password.php"> تعديل كلمة السر </a>
-    <a href="device.php"> الاجهزة</a>
-    <a href="request.php"> الطلبات</a>
-    <a href="../index.php"> الرئيسة</a>
-</div>
-<div class="container">
-    <h2 class="mb-4">تغيير كلمة المرور</h2>
-
-    <!-- رسالة نجاح أو خطأ -->
-    <?php if (!empty($success_message)): ?>
-        <div class="alert alert-success"><?php echo $success_message; ?></div>
-    <?php endif; ?>
-
-    <?php if (!empty($error_message)): ?>
-        <div class="alert alert-danger"><?php echo $error_message; ?></div>
-    <?php endif; ?>
-
-    <form method="POST">
-        <div class="mb-3">
-            <label for="current_password" class="form-label">كلمة المرور الحالية</label>
-            <input type="password" name="current_password" id="current_password" class="form-control" required>
+    <!-- لوحة التحكم -->
+    <div class="dashboard">
+        <h1>لوحة التحكم</h1>
+        <div class="link-control">
+            <a href="profail.php"><i class="fas fa-user"></i> الملف الشخصي</a>
+            <a href="password.php"><i class="fas fa-lock"></i> تعديل كلمة السر</a>
+            <a href="device.php"><i class="fas fa-laptop"></i> الأجهزة</a>
+            <a href="request.php"><i class="fas fa-clipboard-list"></i> الطلبات</a>
+            <a href="../index.php"><i class="fas fa-home"></i> الرئيسية</a>
         </div>
-        <div class="mb-3">
-            <label for="new_password" class="form-label">كلمة المرور الجديدة</label>
-            <input type="password" name="new_password" id="new_password" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="confirm_password" class="form-label">تأكيد كلمة المرور الجديدة</label>
-            <input type="password" name="confirm_password" id="confirm_password" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">تغيير كلمة المرور</button>
-    </form>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+    <!-- نموذج تغيير كلمة المرور -->
+    <div class="container">
+        <h2>تغيير كلمة المرور</h2>
+
+        <!-- رسالة نجاح -->
+        <?php if (!empty($success_message)): ?>
+            <div class="alert alert-success text-center"><?php echo $success_message; ?></div>
+        <?php endif; ?>
+
+        <!-- رسالة خطأ -->
+        <?php if (!empty($error_message)): ?>
+            <div class="alert alert-danger text-center"><?php echo $error_message; ?></div>
+        <?php endif; ?>
+
+        <!-- النموذج -->
+        <form method="POST">
+            <div class="mb-4">
+                <label for="current_password" class="form-label">كلمة المرور الحالية</label>
+                <input type="password" name="current_password" id="current_password" class="form-control"
+                    placeholder="أدخل كلمة المرور الحالية" required>
+            </div>
+            <div class="mb-4">
+                <label for="new_password" class="form-label">كلمة المرور الجديدة</label>
+                <input type="password" name="new_password" id="new_password" class="form-control"
+                    placeholder="أدخل كلمة المرور الجديدة" required>
+            </div>
+            <div class="mb-4">
+                <label for="confirm_password" class="form-label">تأكيد كلمة المرور الجديدة</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control"
+                    placeholder="أعد إدخال كلمة المرور الجديدة" required>
+            </div>
+            <button type="submit" class="btn btn-primary">تغيير كلمة المرور</button>
+        </form>
+    </div>
+
+    <!-- استدعاء Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
+

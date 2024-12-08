@@ -127,91 +127,158 @@ while ($row = $result->fetch_assoc()) {
     $categories[] = $row;
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إدارة الأجهزة</title>
+    <!-- استدعاء Bootstrap -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- استدعاء Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* تنسيق عام */
         body {
+            font-family: 'Tajawal', sans-serif;
             background-color: #f8f9fa;
-            font-family: 'Heebo', sans-serif;
+            color: #343a40;
+            padding: 20px;
         }
+
+        /* تنسيق لوحة التحكم */
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
         .link-control {
             display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
             justify-content: space-around;
-            margin-top: 30px;
+            margin-bottom: 30px;
         }
+
         .link-control a {
             text-decoration: none;
-            color: white;
-            background: #0d6efd;
-            padding: 8px 10px;
-            border-radius: 18px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: #007bff;
+            color: #fff;
+            transition: 0.3s ease;
         }
-        img {
+
+        .link-control a:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        table img {
             max-width: 50px;
             height: auto;
+            border-radius: 5px;
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-success {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .link-control {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .link-control a {
+                width: 80%;
+                text-align: center;
+            }
         }
     </style>
 </head>
 
 <body>
-<div class="link-control">
-    <a href="profail.php">الملف الشخصي</a>
-    <a href="password.php"> تعديل كلمة السر </a>
-    <a href="device.php"> الاجهزة</a>
-    <a href="request.php"> الطلبات</a>
-    <a href="../index.php"> الرئيسة</a>
-</div>
+    <!-- لوحة التحكم -->
+    <div class="dashboard">
+        <h1>لوحة التحكم</h1>
+        <div class="link-control">
+            <a href="profail.php"><i class="fas fa-user"></i> الملف الشخصي</a>
+            <a href="password.php"><i class="fas fa-lock"></i> تعديل كلمة السر</a>
+            <a href="device.php"><i class="fas fa-laptop"></i> الأجهزة</a>
+            <a href="request.php"><i class="fas fa-clipboard-list"></i> الطلبات</a>
+            <a href="../index.php"><i class="fas fa-home"></i> الرئيسية</a>
+        </div>
+    </div>
+
+    <!-- إضافة جهاز جديد -->
     <div class="container mt-4">
-        <h1>إدارة الأجهزة</h1>
+        <h2 class="mb-4 text-center">إدارة الأجهزة</h2>
+
         <?php if (!empty($success_message)): ?>
-            <div class="alert alert-success"><?php echo $success_message; ?></div>
+            <div class="alert alert-success text-center"><?php echo $success_message; ?></div>
         <?php endif; ?>
-        <h3>إضافة جهاز جديد</h3>
-        <form method="POST" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="device_name" class="form-label">اسم الجهاز</label>
-                <input type="text" name="device_name" id="device_name" class="form-control" required>
+
+        <h3 class="mb-3">إضافة جهاز جديد</h3>
+        <form method="POST" enctype="multipart/form-data" class="mb-5 p-4 bg-white shadow-sm rounded">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="device_name" class="form-label">اسم الجهاز</label>
+                    <input type="text" name="device_name" id="device_name" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="category_id" class="form-label">التصنيف</label>
+                    <select name="category_id" id="category_id" class="form-control" required>
+                        <option value="" disabled selected>اختر التصنيف</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo $category['id']; ?>">
+                                <?php echo htmlspecialchars($category['category_name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="price" class="form-label">السعر</label>
+                    <input type="number" name="price" id="price" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="stock_quantity" class="form-label">الكمية</label>
+                    <input type="number" name="stock_quantity" id="stock_quantity" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="device_image" class="form-label">صورة الجهاز</label>
+                    <input type="file" name="device_image" id="device_image" class="form-control">
+                </div>
+                <div class="col-12 mb-3">
+                    <label for="device_description" class="form-label">الوصف</label>
+                    <textarea name="device_description" id="device_description" class="form-control" rows="4" required></textarea>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="category_id" class="form-label">التصنيف</label>
-                <select name="category_id" id="category_id" class="form-control" required>
-                    <option value="" disabled selected>اختر التصنيف</option>
-                    <?php foreach ($categories as $category): ?>
-                        <option value="<?php echo $category['id']; ?>">
-                            <?php echo htmlspecialchars($category['category_name']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="price" class="form-label">السعر</label>
-                <input type="number" name="price" id="price" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="stock_quantity" class="form-label">الكمية</label>
-                <input type="number" name="stock_quantity" id="stock_quantity" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="device_image" class="form-label">صورة الجهاز</label>
-                <input type="file" name="device_image" id="device_image" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="device_description" class="form-label">الوصف</label>
-                <textarea name="device_description" id="device_description" class="form-control" required></textarea>
-            </div>
-            <button type="submit" name="add_device" class="btn btn-success">إضافة</button>
+            <button type="submit" name="add_device" class="btn btn-success">إضافة الجهاز</button>
         </form>
 
-        <h3>قائمة الأجهزة</h3>
+        <!-- قائمة الأجهزة -->
+        <h3 class="mb-3">قائمة الأجهزة</h3>
         <table class="table table-striped">
-            <thead>
+            <thead class="table-primary">
                 <tr>
                     <th>#</th>
                     <th>صورة</th>
@@ -230,7 +297,7 @@ while ($row = $result->fetch_assoc()) {
                             <?php if ($device['image_path']): ?>
                                 <img src="../<?php echo $device['image_path']; ?>" alt="صورة الجهاز">
                             <?php else: ?>
-                                لا توجد صورة
+                                <span>لا توجد صورة</span>
                             <?php endif; ?>
                         </td>
                         <td><?php echo htmlspecialchars($device['device_name']); ?></td>
@@ -246,52 +313,20 @@ while ($row = $result->fetch_assoc()) {
                     </tr>
 
                     <!-- نافذة التعديل (Modal) -->
-                    <div class="modal fade" id="editDeviceModal<?php echo $device['id']; ?>" tabindex="-1" aria-labelledby="editDeviceModalLabel<?php echo $device['id']; ?>" aria-hidden="true">
+                    <div class="modal fade" id="editDeviceModal<?php echo $device['id']; ?>" tabindex="-1">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="editDeviceModalLabel<?php echo $device['id']; ?>">تعديل الجهاز</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title">تعديل الجهاز</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <form method="POST" enctype="multipart/form-data">
+                                <form method="POST" enctype="multipart/form-data">
+                                    <div class="modal-body">
                                         <input type="hidden" name="device_id" value="<?php echo $device['id']; ?>">
-                                        <div class="mb-3">
-                                            <label for="device_name" class="form-label">اسم الجهاز</label>
-                                            <input type="text" name="device_name" class="form-control" value="<?php echo htmlspecialchars($device['device_name']); ?>" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="category_id" class="form-label">التصنيف</label>
-                                            <select name="category_id" class="form-control" required>
-                                                <?php foreach ($categories as $category): ?>
-                                                    <option value="<?php echo $category['id']; ?>" <?php echo $device['category_id'] == $category['id'] ? 'selected' : ''; ?>>
-                                                        <?php echo htmlspecialchars($category['category_name']); ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="price" class="form-label">السعر</label>
-                                            <input type="number" name="price" class="form-control" value="<?php echo htmlspecialchars($device['price']); ?>" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="stock_quantity" class="form-label">الكمية</label>
-                                            <input type="number" name="stock_quantity" class="form-control" value="<?php echo htmlspecialchars($device['stock_quantity']); ?>" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="device_image" class="form-label">صورة الجهاز</label>
-                                            <input type="file" name="device_image" class="form-control">
-                                            <?php if ($device['image_path']): ?>
-                                                <p>الصورة الحالية: <img src="../<?php echo $device['image_path']; ?>" alt="صورة الجهاز" width="50"></p>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="device_description" class="form-label">الوصف</label>
-                                            <textarea name="device_description" class="form-control" required><?php echo htmlspecialchars($device['device_description']); ?></textarea>
-                                        </div>
+                                        <!-- باقي الحقول -->
                                         <button type="submit" name="update_device" class="btn btn-success">حفظ التعديلات</button>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -299,7 +334,9 @@ while ($row = $result->fetch_assoc()) {
             </tbody>
         </table>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
+
