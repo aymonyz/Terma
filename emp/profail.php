@@ -83,7 +83,7 @@ $stmt->close();
 <div class="link-control">
     <a href="profail.php">الملف الشخصي</a>
     <a href="password.php"> تعديل كلمة السر </a>
-    <a href="ads.php"> الإعلانات</a>
+    <a href="device.php"> الاجهزة</a>
     <a href="request.php"> الطلبات</a>
     <a href="../index.php"> الرئيسة</a>
 </div>

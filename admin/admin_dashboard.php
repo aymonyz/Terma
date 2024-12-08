@@ -25,9 +25,9 @@ $result_emp = $conn->query($emp_query);
 $total_emp = $result_emp->fetch_assoc()['total_emp'];
 
 // // جلب عدد الوظائف
-// $jobs_query = "SELECT COUNT(*) as total_jobs FROM jobs";
-// $result_jobs = $conn->query($jobs_query);
-// $total_jobs = $result_jobs->fetch_assoc()['total_jobs'];
+$device = "SELECT COUNT(*) as device_jobs FROM devices";
+$result_device = $conn->query($device);
+$total_device = $result_device->fetch_assoc()['device_jobs'];
 
 // // جلب عدد الإعلانات
 // $ads_query = "SELECT COUNT(*) as total_ads FROM ads";
@@ -163,9 +163,9 @@ $total_users = $user + $total_emp;
                     <div class="col-md-4">
                         <div class="card bg-primary text-white">
                             <div class="card-body text-center">
-                                <h5 class="card-title">الوظائف والإعلانات</h5>
-                                <p class="card-text">عدد الوظائف: <strong><?php  ?></strong></p>
-                                <p class="card-text">عدد الإعلانات: <strong><?php  ?></strong></p>
+                                <h5 class="card-title"> الاجهزة</h5>
+                                <p class="card-text">عدد الاجهزة: <strong><?php  echo $total_device ?></strong></p>
+                                <!-- <p class="card-text">عدد الإعلانات: <strong><?php  ?></strong></p> -->
                                 <a href="manage_requests.php" class="text-white">عرض التفاصيل</a>
                             </div>
                         </div>

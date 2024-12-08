@@ -19,24 +19,83 @@ if (isset($_GET['logout'])) {
 // إضافة تصنيف جديد
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
     $category_name = $_POST['category_name'];
-    $insert_query = "INSERT INTO categories (category_name) VALUES (?)";
-    $stmt = $conn->prepare($insert_query);
-    $stmt->bind_param("s", $category_name);
-    $stmt->execute();
-    $stmt->close();
-    $success_message = "تمت إضافة التصنيف بنجاح.";
+    $category_image = null;
+
+    // معالجة رفع الصورة
+    if (!empty($_FILES['category_image']['name'])) {
+        $target_dir = "../uploads/categories/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true); // إنشاء المجلد إذا لم يكن موجوداً
+        }
+
+        $target_file = $target_dir . basename($_FILES['category_image']['name']);
+        $img = "uploads/categories/" . basename($_FILES['category_image']['name']);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $allowed_types = ["jpg", "jpeg", "png", "gif"];
+
+        if (in_array($imageFileType, $allowed_types)) {
+            if (move_uploaded_file($_FILES['category_image']['tmp_name'], $target_file)) {
+                $category_image = $img;
+            } else {
+                $error_message = "حدث خطأ أثناء رفع الصورة.";
+            }
+        } else {
+            $error_message = "فقط ملفات الصور (JPG, JPEG, PNG, GIF) مسموح بها.";
+        }
+    }
+
+    if (empty($error_message)) {
+        $insert_query = "INSERT INTO categories (category_name, category_image) VALUES (?, ?)";
+        $stmt = $conn->prepare($insert_query);
+        $stmt->bind_param("ss", $category_name, $category_image);
+        $stmt->execute();
+        $stmt->close();
+        $success_message = "تمت إضافة التصنيف بنجاح.";
+    }
 }
 
-// تعديل التصنيف
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_category'])) {
     $category_id = $_POST['category_id'];
     $category_name = $_POST['category_name'];
-    $update_query = "UPDATE categories SET category_name = ? WHERE id = ?";
-    $stmt = $conn->prepare($update_query);
-    $stmt->bind_param("si", $category_name, $category_id);
-    $stmt->execute();
-    $stmt->close();
-    $success_message = "تم تعديل التصنيف بنجاح.";
+    $category_image = null;
+
+    // معالجة رفع الصورة أثناء التعديل
+    if (!empty($_FILES['category_image']['name'])) {
+        $target_dir = "../uploads/categories/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+
+        $target_file = $target_dir . basename($_FILES['category_image']['name']);
+        $img = "uploads/categories/" . basename($_FILES['category_image']['name']);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $allowed_types = ["jpg", "jpeg", "png", "gif"];
+
+        if (in_array($imageFileType, $allowed_types)) {
+            if (move_uploaded_file($_FILES['category_image']['tmp_name'], $target_file)) {
+                $category_image = $img;
+            } else {
+                $error_message = "حدث خطأ أثناء رفع الصورة.";
+            }
+        } else {
+            $error_message = "فقط ملفات الصور (JPG, JPEG, PNG, GIF) مسموح بها.";
+        }
+    }
+
+    if (empty($error_message)) {
+        if ($category_image) {
+            $update_query = "UPDATE categories SET category_name = ?, category_image = ? WHERE id = ?";
+            $stmt = $conn->prepare($update_query);
+            $stmt->bind_param("ssi", $category_name, $category_image, $category_id);
+        } else {
+            $update_query = "UPDATE categories SET category_name = ? WHERE id = ?";
+            $stmt = $conn->prepare($update_query);
+            $stmt->bind_param("si", $category_name, $category_id);
+        }
+        $stmt->execute();
+        $stmt->close();
+        $success_message = "تم تعديل التصنيف بنجاح.";
+    }
 }
 
 // حذف تصنيف
@@ -192,42 +251,63 @@ while ($row = $result_requests->fetch_assoc()) {
                 <h1>إدارة الطلبات والتصنيفات</h1>
                 
                 <!-- إضافة تصنيف -->
-                <form method="POST">
-                    <h3>إضافة تصنيف جديد</h3>
-                    <div class="mb-3">
-                        <label for="category_name" class="form-label">اسم التصنيف</label>
-                        <input type="text" name="category_name" id="category_name" class="form-control" required>
-                    </div>
-                    <button type="submit" name="add_category" class="btn btn-success">إضافة</button>
-                </form>
+            <form method="POST" enctype="multipart/form-data">
+                <h3>إضافة تصنيف جديد</h3>
+                <div class="mb-3">
+                    <label for="category_name" class="form-label">اسم التصنيف</label>
+                    <input type="text" name="category_name" id="category_name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="category_image" class="form-label">صورة التصنيف</label>
+                    <input type="file" name="category_image" id="category_image" class="form-control">
+                </div>
+                <button type="submit" name="add_category" class="btn btn-success">إضافة</button>
+            </form>
 
                 <!-- عرض التصنيفات -->
                 <h3>التصنيفات</h3>
                 <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>اسم التصنيف</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($categories as $category): ?>
-                            <tr>
-                                <td><?php echo $category['id']; ?></td>
-                                <td><?php echo htmlspecialchars($category['category_name']); ?></td>
-                                <td>
-                                    <form method="POST" style="display:inline-block;">
-                                        <input type="hidden" name="category_id" value="<?php echo $category['id']; ?>">
-                                        <input type="text" name="category_name" value="<?php echo htmlspecialchars($category['category_name']); ?>" required>
-                                        <button type="submit" name="update_category" class="btn btn-primary btn-sm">تعديل</button>
-                                    </form>
-                                    <a href="?delete_category=<?php echo $category['id']; ?>" class="btn btn-danger btn-sm">حذف</a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>اسم التصنيف</th>
+            <th>صورة التصنيف</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($categories as $category): ?>
+            <tr>
+                <td><?php echo $category['id']; ?></td>
+                <td><?php echo htmlspecialchars($category['category_name']); ?></td>
+                <td>
+                    <?php if (!empty($category['category_image'])): ?>
+                        <img src="<?php echo htmlspecialchars("../".$category['category_image']); ?>" alt="صورة التصنيف" width="50">
+                    <?php else: ?>
+                        لا توجد صورة
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <form method="POST" enctype="multipart/form-data" style="display:inline-block;">
+                        <!-- تعديل اسم التصنيف -->
+                        <input type="hidden" name="category_id" value="<?php echo $category['id']; ?>">
+                        <input type="text" name="category_name" value="<?php echo htmlspecialchars($category['category_name']); ?>" required>
+
+                        <!-- رفع صورة جديدة -->
+                        <input type="file" name="category_image" class="form-control" style="display:inline-block; width:auto;">
+
+                        <!-- زر التعديل -->
+                        <button type="submit" name="update_category" class="btn btn-primary btn-sm">تعديل</button>
+                    </form>
+                    
+                    <!-- زر الحذف -->
+                    <a href="?delete_category=<?php echo $category['id']; ?>" class="btn btn-danger btn-sm">حذف</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
 
                 <!-- عرض الأجهزة -->
                 <h3>الأجهزة</h3>
