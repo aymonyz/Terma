@@ -224,7 +224,7 @@ while ($row = $result->fetch_assoc()) {
             <a href="profail.php"><i class="fas fa-user"></i> الملف الشخصي</a>
             <a href="password.php"><i class="fas fa-lock"></i> تعديل كلمة السر</a>
             <a href="device.php"><i class="fas fa-laptop"></i> الأجهزة</a>
-            <a href="request.php"><i class="fas fa-clipboard-list"></i> الطلبات</a>
+            <a href="requests.php"><i class="fas fa-clipboard-list"></i> الطلبات</a>
             <a href="../index.php"><i class="fas fa-home"></i> الرئيسية</a>
         </div>
     </div>

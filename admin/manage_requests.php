@@ -131,17 +131,17 @@ while ($row = $result_devices->fetch_assoc()) {
 }
 
 // جلب الطلبات
-$purchase_requests = [];
-$requests_query = "
-    SELECT 
-        purchase_requests.*, 
-        devices.device_name 
-    FROM purchase_requests 
-    JOIN devices ON purchase_requests.device_id = devices.id";
-$result_requests = $conn->query($requests_query);
-while ($row = $result_requests->fetch_assoc()) {
-    $purchase_requests[] = $row;
-}
+// $purchase_requests = [];
+// $requests_query = "
+//     SELECT 
+//         purchase_requests.*, 
+//         devices.device_name 
+//     FROM purchase_requests 
+//     JOIN devices ON purchase_requests.device_id = devices.id";
+// $result_requests = $conn->query($requests_query);
+// while ($row = $result_requests->fetch_assoc()) {
+//     $purchase_requests[] = $row;
+// }
 ?>
 
 <!DOCTYPE html>

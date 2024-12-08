@@ -118,11 +118,12 @@
                 <i class="fas fa-users me-2"></i> إدارة المستخدمين
             </a>
             <a href="manage_requests.php" class="d-flex align-items-center">
-                <i class="fas fa-tasks me-2"></i> إدارة الطلبات
+                <i class="fas fa-tasks me-2"></i>   التصنيفات
             </a>
             <a href="../index.php" class="d-flex align-items-center">
                 <i class="fas fa-arrow-left me-2"></i> العودة
             </a>
+            
         </div>
         <div class="d-flex align-items-center">
             <span class="username"><i class="fas fa-user-circle me-2"></i> مرحباً، المدير</span>
