@@ -1,10 +1,8 @@
 <?php
-error_reporting(E_ALL); // عرض جميع الأخطاء
-ini_set('display_errors', 1); // تمكين عرض الأخطاء
-ini_set('display_startup_errors', 1); 
 include '../db.php';
+include 'amin-Header.php';
+
 session_start();
-echo realpath('../uploads/categories/');
 
 if (isset($_SESSION['user_id'])) {
     $username = $_SESSION['email'];
@@ -147,241 +145,170 @@ while ($row = $result_requests->fetch_assoc()) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <!-- Bootstrap CSS -->
+    <title>لوحة الإدارة</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-    body {
+        body {
+            font-family: 'Tajawal', sans-serif;
             background-color: #f8f9fa;
-            font-family: 'Heebo', sans-serif;
         }
 
-        .sidebar {
-            height: 100vh;
-            background-color: #343a40;
-            color: #fff;
-            padding: 20px;
-        }
-
-        .sidebar a {
-            color: #adb5bd;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .sidebar a:hover {
-            color: #fff;
-        }
-
-        .sidebar .username {
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            color: #ffc107;
-        }
-
-        .logout-btn {
-            background-color: #dc3545;
-            border: none;
-            padding: 10px 20px;
-            color: #fff;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            margin-top: 20px;
-            display: block;
-            text-align: center;
-        }
-
-        .logout-btn:hover {
-            background-color: #c82333;
-        }
-
-        .main-content {
-            padding: 20px;
+        .container {
+            margin-top: 30px;
         }
 
         .card {
             border: none;
             border-radius: 10px;
-            transition: transform 0.2s;
-            height: 150px; /* تثبيت الارتفاع */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        p {
-            margin: 2px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
         }
 
         .card:hover {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
 
-        .footer {
+        .btn-primary,
+        .btn-success,
+        .btn-danger {
+            font-weight: bold;
+            border-radius: 8px;
+        }
+
+        table {
             margin-top: 20px;
-            text-align: center;
+        }
+
+        table img {
+            border-radius: 5px;
+        }
+
+        .badge {
             font-size: 0.9rem;
-            color: #6c757d;
+        }
+
+        h3 {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        form input,
+        form button {
+            border-radius: 8px;
+        }
+
+        .form-label {
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    
+    <div class="container">
+        <h1 class="text-center text-primary">لوحة إدارة التصنيفات والطلبات</h1>
 
-<div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar">
-                <h4 class="text-white mb-4">القائمة</h4>
-                <div class="username">مرحباً، المدير </div>
-                <a href="admin_dashboard.php">الصفحة الرئيسية</a>
-                <a href="admin_user.php">إدارة المستخدمين</a>
-                <a href="manage_requests.php">إدارة الطلبات</a>
-                <a href="../index.php">العودة</a>
-                <!-- زر تسجيل الخروج -->
-                <a href="?logout=true" class="logout-btn">تسجيل الخروج</a>
-            </div>
-
-            <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 main-content">
-                <h1>إدارة الطلبات والتصنيفات</h1>
-                
-                <!-- إضافة تصنيف -->
+        <!-- إضافة تصنيف جديد -->
+        <div class="card p-4 mt-4">
+            <h3>إضافة تصنيف جديد</h3>
             <form method="POST" enctype="multipart/form-data">
-                <h3>إضافة تصنيف جديد</h3>
                 <div class="mb-3">
                     <label for="category_name" class="form-label">اسم التصنيف</label>
-                    <input type="text" name="category_name" id="category_name" class="form-control" required>
+                    <input type="text" name="category_name" id="category_name" class="form-control" placeholder="أدخل اسم التصنيف" required>
                 </div>
                 <div class="mb-3">
                     <label for="category_image" class="form-label">صورة التصنيف</label>
                     <input type="file" name="category_image" id="category_image" class="form-control">
                 </div>
-                <button type="submit" name="add_category" class="btn btn-success">إضافة</button>
+                <button type="submit" name="add_category" class="btn btn-success w-100">إضافة التصنيف</button>
             </form>
+        </div>
 
-                <!-- عرض التصنيفات -->
-                <h3>التصنيفات</h3>
-                <table class="table table-striped">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>اسم التصنيف</th>
-            <th>صورة التصنيف</th>
-            <th>الإجراءات</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($categories as $category): ?>
-            <tr>
-                <td><?php echo $category['id']; ?></td>
-                <td><?php echo htmlspecialchars($category['category_name']); ?></td>
-                <td>
-                    <?php if (!empty($category['category_image'])): ?>
-                        <img src="<?php echo htmlspecialchars("../".$category['category_image']); ?>" alt="صورة التصنيف" width="50">
-                    <?php else: ?>
-                        لا توجد صورة
-                    <?php endif; ?>
-                </td>
-                <td>
-                    <form method="POST" enctype="multipart/form-data" style="display:inline-block;">
-                        <!-- تعديل اسم التصنيف -->
-                        <input type="hidden" name="category_id" value="<?php echo $category['id']; ?>">
-                        <input type="text" name="category_name" value="<?php echo htmlspecialchars($category['category_name']); ?>" required>
-
-                        <!-- رفع صورة جديدة -->
-                        <input type="file" name="category_image" class="form-control" style="display:inline-block; width:auto;">
-
-                        <!-- زر التعديل -->
-                        <button type="submit" name="update_category" class="btn btn-primary btn-sm">تعديل</button>
-                    </form>
-                    
-                    <!-- زر الحذف -->
-                    <a href="?delete_category=<?php echo $category['id']; ?>" class="btn btn-danger btn-sm">حذف</a>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
-
-
-                <!-- عرض الأجهزة -->
-                <h3>الأجهزة</h3>
-                <table class="table table-striped">
-                    <thead>
+        <!-- عرض التصنيفات -->
+        <div class="card p-4 mt-4">
+            <h3>التصنيفات</h3>
+            <table class="table table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>اسم التصنيف</th>
+                        <th>صورة التصنيف</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($categories as $category): ?>
                         <tr>
-                            <th>#</th>
-                            <th>اسم الجهاز</th>
-                            <th>الوصف</th>
-                            <th>التصنيف</th>
-                            <th>السعر</th>
-                            <th>الكمية</th>
+                            <td><?php echo $category['id']; ?></td>
+                            <td><?php echo htmlspecialchars($category['category_name']); ?></td>
+                            <td>
+                                <?php if (!empty($category['category_image'])): ?>
+                                    <img src="<?php echo htmlspecialchars("../".$category['category_image']); ?>" alt="صورة التصنيف" width="50">
+                                <?php else: ?>
+                                    <span>لا توجد صورة</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <form method="POST" enctype="multipart/form-data" class="d-inline">
+                                    <input type="hidden" name="category_id" value="<?php echo $category['id']; ?>">
+                                    <input type="text" name="category_name" value="<?php echo htmlspecialchars($category['category_name']); ?>" class="form-control d-inline w-50" required>
+                                    <input type="file" name="category_image" class="form-control d-inline w-25">
+                                    <button type="submit" name="update_category" class="btn btn-primary btn-sm">تعديل</button>
+                                </form>
+                                <a href="?delete_category=<?php echo $category['id']; ?>" class="btn btn-danger btn-sm">حذف</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($devices as $device): ?>
-                            <tr>
-                                <td><?php echo $device['id']; ?></td>
-                                <td><?php echo htmlspecialchars($device['device_name']); ?></td>
-                                <td><?php echo htmlspecialchars($device['device_description']); ?></td>
-                                <td><?php echo htmlspecialchars($device['category_name']); ?></td>
-                                <td><?php echo htmlspecialchars($device['price']); ?></td>
-                                <td><?php echo htmlspecialchars($device['stock_quantity']); ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-                <!-- عرض الطلبات -->
-                <h3>الطلبات</h3>
-                <table class="table table-striped">
-                    <thead>
+        <!-- عرض الطلبات -->
+        <div class="card p-4 mt-4">
+            <h3>الطلبات</h3>
+            <table class="table table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>اسم العميل</th>
+                        <th>اسم الجهاز</th>
+                        <th>الكمية</th>
+                        <th>الإجمالي</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($purchase_requests as $request): ?>
                         <tr>
-                            <th>#</th>
-                            <th>اسم العميل</th>
-                            <th>اسم الجهاز</th>
-                            <th>الكمية</th>
-                            <th>الإجمالي</th>
-                            <th>الحالة</th>
+                            <td><?php echo $request['id']; ?></td>
+                            <td><?php echo htmlspecialchars($request['customer_name']); ?></td>
+                            <td><?php echo htmlspecialchars($request['device_name']); ?></td>
+                            <td><?php echo htmlspecialchars($request['quantity']); ?></td>
+                            <td><?php echo htmlspecialchars($request['total_price']); ?></td>
+                            <td>
+                                <?php if ($request['status'] === 'pending'): ?>
+                                    <span class="badge bg-warning">معلقة</span>
+                                <?php elseif ($request['status'] === 'approved'): ?>
+                                    <span class="badge bg-success">مقبولة</span>
+                                <?php elseif ($request['status'] === 'rejected'): ?>
+                                    <span class="badge bg-danger">مرفوضة</span>
+                                <?php endif; ?>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($purchase_requests as $request): ?>
-                            <tr>
-                                <td><?php echo $request['id']; ?></td>
-                                <td><?php echo htmlspecialchars($request['customer_name']); ?></td>
-                                <td><?php echo htmlspecialchars($request['device_name']); ?></td>
-                                <td><?php echo htmlspecialchars($request['quantity']); ?></td>
-                                <td><?php echo htmlspecialchars($request['total_price']); ?></td>
-                                <td>
-                                    <?php if ($request['status'] === 'pending'): ?>
-                                        <span class="badge bg-warning">معلقة</span>
-                                    <?php elseif ($request['status'] === 'approved'): ?>
-                                        <span class="badge bg-success">مقبولة</span>
-                                    <?php elseif ($request['status'] === 'rejected'): ?>
-                                        <span class="badge bg-danger">مرفوضة</span>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 
-            <!-- Main Content -->
-            
-        </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
+
