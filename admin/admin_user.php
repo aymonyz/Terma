@@ -1,5 +1,7 @@
 <?php
 include '../db.php';
+include 'amin-Header.php';
+
 session_start();
 
 if (isset($_SESSION['user_id'])) {
@@ -187,15 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
 
 <body>
     <!-- Sidebar -->
-    <div class="sidebar">
-        <h4 class="text-white">القائمة</h4>
-        <div class="username">مرحباً، المدير </div>
-        <a href="admin_dashboard.php">الصفحة الرئيسية</a>
-        <a href="admin_user.php">إدارة المستخدمين</a>
-        <a href="manage_requests.php">إدارة الطلبات</a>
-        <a href="../index.php">العودة</a>
-        <a href="?logout=true" class="btn btn-danger mt-3">تسجيل الخروج</a>
-    </div>
+    
 
     <!-- Main Content -->
     <div class="main-content">
