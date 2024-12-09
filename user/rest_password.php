@@ -1,5 +1,6 @@
 <?php
 include '../db.php';
+include 'nav.php';
 session_start();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['account_type'] !== 'customer') {
@@ -68,29 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .link-control {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
-        }
-
-        .link-control a {
-            text-decoration: none;
-            color: white;
-            background: #0d6efd;
-            padding: 8px 10px;
-            border-radius: 18px;
-        }
     </style>
 </head>
 
 <body>
-<div class="link-control">
-    <a href="profail.php">الملف الشخصي</a>
-    <a href="rest_password.php">تغيير كلمة السر</a>
-    <a href="orders.php">الطلبات</a>
-    <a href="../index.php">الرئيسة</a>
-</div>
+
 <div class="container">
     <h2 class="mb-4">تغيير كلمة المرور</h2>
 
