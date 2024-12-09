@@ -76,6 +76,7 @@
         <a href="profail.php"><i class="fas fa-user"></i> <span>الملف الشخصي</span></a>
         <a href="rest_password.php"><i class="fas fa-lock"></i> <span>تغيير كلمة السر</span></a>
         <a href="orders.php"><i class="fas fa-clipboard-list"></i> <span>الطلبات</span></a>
+        <a href="maintenance_requests.php"><i class="fas fa-clipboard-list"></i> <span>الطلبات الصيانة</span></a>
         <a href="../index.php"><i class="fas fa-home"></i> <span>الرئيسة</span></a>
     </div>
 </body>
