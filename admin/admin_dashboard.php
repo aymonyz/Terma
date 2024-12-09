@@ -149,7 +149,7 @@ $total_users = $user + $total_emp;
             <div class="col-md-4">
                 <div class="card text-center">
                     <h5 class="text-success">المستخدمون</h5>
-                    <p>عدد المستخدمين: <strong><?php echo $total_users; ?></strong></p>
+                    <p>:إجمالي عدد المستخدمين <strong><?php echo $total_users; ?></strong></p>
                     <p>عدد العملاء: <strong><?php echo $user; ?></strong></p>
                     <p>عدد الموظفين: <strong><?php echo $total_emp; ?></strong></p>
                     <a href="admin_user.php" class="text-success">عرض التفاصيل</a>

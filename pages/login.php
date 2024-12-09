@@ -176,6 +176,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div class="text-center mt-3">
                 <a href="register.php" class="text-decoration-none">Create an account</a>
               </div>
+              <!-- عرض الرسالة -->
+    <?php if (!empty($message)): ?>
+    <script>
+        Swal.fire({
+            icon: '<?php echo $messageType; ?>',
+            title: '<?php echo ucfirst($messageType); ?>!',
+            text: '<?php echo $message; ?>'
+        });
+    </script>
+    <?php endif; ?>
             </div>
           </div>
         </div>

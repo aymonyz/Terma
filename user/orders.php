@@ -2,6 +2,7 @@
 // بدء الجلسة
 session_start();
 include '../db.php';
+include 'nav.php';
 
 // تحقق من تسجيل الدخول
 if (!isset($_SESSION['loggedin'])) {
@@ -58,45 +59,23 @@ $stmt->close();
     <title>طلباتي</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
+     body {
             background-color: #f8f9fa;
             font-family: 'Heebo', sans-serif;
         }
-        .order-status {
-            font-weight: bold;
-        }
-        .status-pending {
-            color: orange;
-        }
-        .status-completed {
-            color: green;
-        }
-        .status-canceled {
-            color: red;
-        }
-        
-        .link-control {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
-        }
 
-        .link-control a {
-            text-decoration: none;
-            color: white;
-            background: #0d6efd;
-            padding: 8px 10px;
-            border-radius: 18px;
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-<div class="link-control">
-    <a href="profail.php">الملف الشخصي</a>
-    <a href="rest_password.php">تغيير كلمة السر</a>
-    <a href="orders.php">الطلبات</a>
-    <a href="../index.php">الرئيسة</a>
-</div>
+
 <div class="container mt-5">
     <h1 class="text-center">طلباتي</h1>
 
