@@ -386,6 +386,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
         <h1 class="mb-4">
             <?php if ($category_id): ?>
                 الأجهزة في تصنيف: <?php echo htmlspecialchars($category['category_name']); ?>
+                <!-- <span class="badge bg-primary rounded-pill"><?php echo $item['price']; ?></span> -->
+
             <?php else: ?>
                 <h2> جميع الاجهزة</h2>
                 <?php endif; ?>

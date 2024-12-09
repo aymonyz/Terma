@@ -72,7 +72,11 @@ body {
     font-size: 1.5rem;
     margin-top: 10px;
 }
+.hero-text{
+    position: relative !important;
+    bottom: -72% !important;
 
+}
 /* قسم التعريف */
 .about-section {
     padding: 70px 20px;
@@ -218,65 +222,7 @@ html {
 }
 
 
-/* الروابط داخل القائمة العلوية */
-.nav-list a {
-    text-decoration: none;
-    color: white;
-    font-weight: 700;
-    transition: color 0.3s ease;
-}
 
-.nav-list a:hover {
-    color: #f05a28;
-}
-
-/* تباعد الأقسام */
-section {
-    padding-top: 100px; /* لتجنب تغطية المحتوى عند التنقل */
-}
-
-
-
-
-
-/* تصميم الزر */
-.scroll-down {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 60px;
-    background-color: #f05a28;
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    line-height: 60px;
-    border-radius: 50%; /* جعل الزر دائريًا */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    animation: bounce 2s infinite; /* حركة ارتداد */
-}
-
-/* تأثير عند التمرير */
-.scroll-down:hover {
-    transform: translateX(-50%) scale(1.1); /* تكبير عند التمرير */
-    background-color: #ff8e00; /* تغيير اللون */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-}
-
-/* حركة السهم */
-@keyframes bounce {
-    0%, 100% {
-        transform: translateX(-50%) translateY(0);
-    }
-    50% {
-        transform: translateX(-50%) translateY(-10px);
-    }
-}
-/* تصميم الزر */
 .custom-button {
     display: inline-block;
     padding: 12px 25px;
@@ -325,11 +271,6 @@ section {
 .custom-button:hover::before {
     left: 100%; /* حركة الضوء */
 }
-.swiper-button-next:after, .swiper-button-prev:after {
-    font-family: swiper-icons;
-    font-size: var(--swiper-navigation-size);
-    text-transform: none !important;
-    letter-spacing: 0;
-    font-variant: initial;
-    line-height: 1;
+.navbar{
+position: fixed;
 }
