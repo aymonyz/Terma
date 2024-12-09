@@ -29,11 +29,6 @@ try {
         $users[] = $row;
     }
 
-    // جلب الموظفين
-    $employeeQuery = $conn->query("SELECT * FROM emp");
-    while ($row = $employeeQuery->fetch_assoc()) {
-        $employees[] = $row;
-    }
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
@@ -46,13 +41,6 @@ if (isset($_GET['delete_user'])) {
     exit();
 }
 
-// حذف موظف
-if (isset($_GET['delete_employee'])) {
-    $id = intval($_GET['delete_employee']);
-    $conn->query("DELETE FROM emp WHERE id = $id");
-    header("Location: admin_user.php");
-    exit();
-}
 
 // تعديل بيانات المستخدم
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
@@ -69,21 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
     exit();
 }
 
-// تعديل بيانات الموظف
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_employee'])) {
-    $id = intval($_POST['id']);
-    $first_name = $conn->real_escape_string($_POST['first_name']);
-    $last_name = $conn->real_escape_string($_POST['last_name']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $phone = $conn->real_escape_string($_POST['phone']);
-    $city = $conn->real_escape_string($_POST['city']);
-    $job_title = $conn->real_escape_string($_POST['job_title']);
-
-    $conn->query("UPDATE emp SET first_name = '$first_name', last_name = '$last_name', email = '$email', phone = '$phone', city = '$city', job_title = '$job_title' WHERE id = $id");
-    header("Location: admin_user.php");
-    exit();
-}
-
 // إضافة مستخدم جديد
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
     $first_name = $conn->real_escape_string($_POST['first_name']);
@@ -93,28 +66,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
     $city = $conn->real_escape_string($_POST['city']);
     $job_title = $conn->real_escape_string($_POST['job_title']);
     $birth_date = $conn->real_escape_string($_POST['birth_date']);
+    $gender = $conn->real_escape_string($_POST['gender']);
     $password = password_hash($conn->real_escape_string($_POST['password']), PASSWORD_DEFAULT);
 
-    $conn->query("INSERT INTO user (first_name, last_name, email, phone, city, job_title, birth_date, password) VALUES ('$first_name', '$last_name', '$email', '$phone', '$city', '$job_title', '$birth_date', '$password')");
-    header("Location: admin_user.php");
-    exit();
+    $insert_query = "
+        INSERT INTO user (first_name, last_name, email, password, gender, birth_date, phone, city, job_title) 
+        VALUES ('$first_name', '$last_name', '$email', '$password', '$gender', '$birth_date', '$phone', '$city', '$job_title')
+    ";
+
+    if ($conn->query($insert_query) === TRUE) {
+        header("Location: admin_user.php"); // إعادة التوجيه
+        exit();
+    } else {
+        echo "Error: " . $conn->error;
+    }
 }
 
-// إضافة موظف جديد
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
-    $first_name = $conn->real_escape_string($_POST['first_name']);
-    $last_name = $conn->real_escape_string($_POST['last_name']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $phone = $conn->real_escape_string($_POST['phone']);
-    $city = $conn->real_escape_string($_POST['city']);
-    $job_title = $conn->real_escape_string($_POST['job_title']);
-    $password = password_hash($conn->real_escape_string($_POST['password']), PASSWORD_DEFAULT);
-    $created_by = $_SESSION['user_id'];
 
-    $conn->query("INSERT INTO emp (first_name, last_name, email, phone, city, job_title, password, created_by) VALUES ('$first_name', '$last_name', '$email', '$phone', '$city', '$job_title', '$password', '$created_by')");
-    header("Location: admin_user.php");
-    exit();
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -283,41 +252,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="POST">
-                            <div class="mb-3">
-                                <label>الاسم الأول</label>
-                                <input type="text" name="first_name" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>الاسم الأخير</label>
-                                <input type="text" name="last_name" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>البريد الإلكتروني</label>
-                                <input type="email" name="email" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>رقم الهاتف</label>
-                                <input type="text" name="phone" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>المدينة</label>
-                                <input type="text" name="city" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>الوظيفة</label>
-                                <input type="text" name="job_title" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>تاريخ الميلاد</label>
-                                <input type="date" name="birth_date" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>كلمة المرور</label>
-                                <input type="password" name="password" class="form-control" required>
-                            </div>
-                            <button type="submit" name="add_user" class="btn btn-success">إضافة</button>
-                        </form>
+                    <form action="" method="POST">
+    <div class="mb-3">
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label>Gender</label>
+        <select name="gender" class="form-select" required>
+            <option value="ذكر">Male</option>
+            <option value="أنثى">Female</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="birth_date">Birth Date</label>
+        <input type="date" id="birth_date" name="birth_date" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="phone" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="job_title">Job Title</label>
+        <input type="text" id="job_title" name="job_title" class="form-control" required>
+    </div>
+    <button type="submit" name="add_user" class="btn btn-primary">Add User</button>
+</form>
+
                     </div>
                 </div>
             </div>

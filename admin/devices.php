@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_device'])) {
 
     $insert_query = "INSERT INTO devices (emp_id, device_name, category_id, price, stock_quantity, device_description, image_path) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insert_query);
-    $stmt->bind_param("isidiss", $emp_id, $device_name, $category_id, $price, $stock_quantity, $device_description, $image_path);
+    $stmt->bind_param("isidiss", 0, $device_name, $category_id, $price, $stock_quantity, $device_description, $image_path);
     $stmt->execute();
     $stmt->close();
 
@@ -266,61 +266,45 @@ while ($row = $result->fetch_assoc()) {
         <!-- قائمة الأجهزة -->
         <h3 class="mb-3">قائمة الأجهزة</h3>
         <table class="table table-striped">
-            <thead class="table-primary">
-                <tr>
-                    <th>#</th>
-                    <th>صورة</th>
-                    <th>اسم الجهاز</th>
-                    <th>التصنيف</th>
-                    <th>السعر</th>
-                    <th>الكمية</th>
-                    <th>الإجراءات</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($devices as $device): ?>
-                    <tr>
-                        <td><?php echo $device['id']; ?></td>
-                        <td>
-                            <?php if ($device['image_path']): ?>
-                                <img src="../<?php echo $device['image_path']; ?>" alt="صورة الجهاز">
-                            <?php else: ?>
-                                <span>لا توجد صورة</span>
-                            <?php endif; ?>
-                        </td>
-                        <td><?php echo htmlspecialchars($device['device_name']); ?></td>
-                        <td><?php echo htmlspecialchars($device['category_name']); ?></td>
-                        <td><?php echo htmlspecialchars($device['price']); ?></td>
-                        <td><?php echo htmlspecialchars($device['stock_quantity']); ?></td>
-                        <td>
-                            <!-- زر التعديل -->
-                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDeviceModal<?php echo $device['id']; ?>">تعديل</button>
-                            <!-- زر الحذف -->
-                            <a href="?delete_device=<?php echo $device['id']; ?>" class="btn btn-danger btn-sm">حذف</a>
-                        </td>
-                    </tr>
+    <thead class="table-primary">
+        <tr>
+            <th>#</th>
+            <th>صورة</th>
+            <th>اسم الجهاز</th>
+            <th>التصنيف</th>
+            <th>السعر</th>
+            <th>الكمية</th>
+            <th>تمت الإضافة بواسطة</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($devices as $device): ?>
+            <tr>
+                <td><?php echo $device['id']; ?></td>
+                <td>
+                    <?php if ($device['image_path']): ?>
+                        <img src="../<?php echo $device['image_path']; ?>" alt="صورة الجهاز">
+                    <?php else: ?>
+                        <span>لا توجد صورة</span>
+                    <?php endif; ?>
+                </td>
+                <td><?php echo htmlspecialchars($device['device_name']); ?></td>
+                <td><?php echo htmlspecialchars($device['category_name']); ?></td>
+                <td><?php echo htmlspecialchars($device['price']); ?></td>
+                <td><?php echo htmlspecialchars($device['stock_quantity']); ?></td>
+                <td><?php echo htmlspecialchars($device['emp_id']); ?></td>
+                <td>
+                    <!-- زر التعديل -->
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDeviceModal<?php echo $device['id']; ?>">تعديل</button>
+                    <!-- زر الحذف -->
+                    <a href="?delete_device=<?php echo $device['id']; ?>" class="btn btn-danger btn-sm">حذف</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 
-                    <!-- نافذة التعديل (Modal) -->
-                    <div class="modal fade" id="editDeviceModal<?php echo $device['id']; ?>" tabindex="-1">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">تعديل الجهاز</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <form method="POST" enctype="multipart/form-data">
-                                    <div class="modal-body">
-                                        <input type="hidden" name="device_id" value="<?php echo $device['id']; ?>">
-                                        <!-- باقي الحقول -->
-                                        <button type="submit" name="update_device" class="btn btn-success">حفظ التعديلات</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

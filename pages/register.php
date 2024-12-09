@@ -127,56 +127,55 @@ $conn->close();
             </div>
             <!-- قسم النموذج -->
             <div class="col-md-6 form-container">
-                <h2 class="text-center">تسجيل المستخدم</h2>
-                <form method="POST" action="">
-                    <div class="mb-3">
-                        <label for="first_name">الاسم الأول</label>
-                        <input type="text" id="first_name" name="first_name" class="form-control" placeholder="أدخل اسمك الأول" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="last_name">الاسم الأخير</label>
-                        <input type="text" id="last_name" name="last_name" class="form-control" placeholder="أدخل اسمك الأخير" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email">البريد الإلكتروني</label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="أدخل بريدك الإلكتروني" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password">كلمة المرور</label>
-                        <input type="password" id="password" name="password" class="form-control" placeholder="أدخل كلمة المرور" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">الجنس</label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="male" value="ذكر" required>
-                            <label class="form-check-label" for="male">ذكر</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="female" value="أنثى" required>
-                            <label class="form-check-label" for="female">أنثى</label>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="birth_date">تاريخ الميلاد</label>
-                        <input type="date" id="birth_date" name="birth_date" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone">رقم الهاتف</label>
-                        <input type="text" id="phone" name="phone" class="form-control" placeholder="أدخل رقم هاتفك" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="city">المدينة</label>
-                        <input type="text" id="city" name="city" class="form-control" placeholder="أدخل مدينتك" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="job_title">المسمى الوظيفي</label>
-                        <input type="text" id="job_title" name="job_title" class="form-control" placeholder="أدخل مسمى وظيفتك" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">تسجيل</button>
-                </form>
-
-                 </div>
+    <h2 class="text-center">User Registration</h2>
+    <form method="POST" action="">
+        <div class="mb-3">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Enter your first name" required>
         </div>
+        <div class="mb-3">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Enter your last name" required>
+        </div>
+        <div class="mb-3">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+        </div>
+        <div class="mb-3">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+        </div>
+        <label class="form-label">Gender</label>
+        <div class="mb-3">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="male" value="Male" required>
+                <label class="form-check-label" for="male">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="female" value="Female" required>
+                <label class="form-check-label" for="female">Female</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="birth_date">Date of Birth</label>
+            <input type="date" id="birth_date" name="birth_date" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
+        </div>
+        <div class="mb-3">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" class="form-control" placeholder="Enter your city" required>
+        </div>
+        <div class="mb-3">
+            <label for="job_title">Job Title</label>
+            <input type="text" id="job_title" name="job_title" class="form-control" placeholder="Enter your job title" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+    </form>
+</div>
+
         <a href="login.php" class="btn btn-primary w-100">Do you have an account?</a>       
     </div>
 
