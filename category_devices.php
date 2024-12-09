@@ -96,10 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/cart.css">
-    <!-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"> -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
- 
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"> -->
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -227,62 +228,150 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
             border-radius: 10px;
             background-color: #fff;
         }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(to bottom, #f7f9fc, #eef1f7);
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background: #007bff;
+            color: #fff;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .swiper-container {
+            width: 90%;
+            height: 400px;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #007bff;
+            font-size: 1.5rem;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .category-buttons a {
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .category-buttons a:hover {
+            background: linear-gradient(to right, #0056b3, #007bff);
+            transform: scale(1.1);
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .btn-add-to-cart {
+            background: linear-gradient(to right, #28a745, #218838);
+            color: #fff;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-add-to-cart:hover {
+            background: linear-gradient(to right, #218838, #28a745);
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+    
     </style>
 </head>
 <body>
-<div class="container mt-4">
-        <h1 class="text-center mb-4">عرض جميع الأجهزة</h1>
+    
+    <div class="container mt-4">
+        <!-- قائمة التصنيفات -->
+             <!-- السلايدر -->
+             <div class="swiper-container">
+    <div class="swiper-wrapper">
+        <?php
+        // استعلام جديد لجلب الصور من الأجهزة
+        $slider_query = "SELECT image_path, device_name FROM devices";
+        $slider_result = $conn->query($slider_query);
 
-        <!-- السلايدر -->
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <?php
-                // جلب جميع الأجهزة من قاعدة البيانات لعرضها في السلايدر
-                $devices_slider_query = "SELECT * FROM devices";
-                $devices_slider_result = $conn->query($devices_slider_query);
-                while ($device = $devices_slider_result->fetch_assoc()):
-                ?>
+        // عرض الصور في السلايدر
+        if ($slider_result->num_rows > 0) {
+            while ($device = $slider_result->fetch_assoc()): ?>
                 <div class="swiper-slide">
                     <img src="<?php echo htmlspecialchars($device['image_path'] ?? 'default-image.png'); ?>" 
                          alt="<?php echo htmlspecialchars($device['device_name']); ?>">
                 </div>
-                <?php endwhile; ?>
-            </div>
-            <!-- الأزرار -->
-  
-        </div>
+            <?php endwhile;
+        } else {
+            echo "<div class='swiper-slide'>لا توجد أجهزة متاحة حالياً.</div>";
+        }
+        ?>
     </div>
 
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script>
-        const swiper = new Swiper('.swiper-container', {
-            loop: true, // التشغيل بشكل دائري
-            autoplay: {
-                delay: 3000, // التمرير التلقائي كل 3 ثواني
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            slidesPerView: 3, // عدد العناصر المرئية
-            spaceBetween: 20, // المسافة بين العناصر
-            breakpoints: {
-                768: {
-                    slidesPerView: 2,
-                },
-                480: {
-                    slidesPerView: 1,
-                },
-            },
-        });
-    </script>
-    <div class="container mt-4">
-        <!-- قائمة التصنيفات -->
+</div>
+
+
         <div class="category-buttons">
             <a href="category_devices.php" class="btn btn-primary">عرض جميع الأجهزة</a>
             <?php while ($category = $categories_result->fetch_assoc()): ?>
@@ -312,7 +401,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
                 <div class="card-body">
                     <h5 class="card-title"><?php echo htmlspecialchars($device['device_name']); ?></h5>
                     <p class="card-text"><?php echo htmlspecialchars($device['device_description']); ?></p>
-                    <p class="card-text">السعر: <?php echo htmlspecialchars($device['price']); ?> ريال</p>
+                    <p class="card-text">السعر: <?php echo htmlspecialchars($device['price']); ?>SDG</p>
                     <button class="btn btn-add-to-cart" 
                             data-id="<?php echo $device['id']; ?>" 
                             data-name="<?php echo htmlspecialchars($device['device_name']); ?>" 
@@ -369,7 +458,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 
         <!-- زر الرجوع -->
         <div>
-            <a href="javascript:history.back()" class="btn-back">رجوع</a>
+            <a href="index.php" class="btn-back">رجوع</a>
         </div>
     </div>
 
