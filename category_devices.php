@@ -94,10 +94,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/cart.css">
     <!-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"> -->
-
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+ 
     <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 300px;
+            margin: 20px auto;
+        }
+
+        .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #007bff;
+        }
+
+        .swiper-pagination-bullet {
+            background: #007bff;
+        }
+   
         body {
             background-color: #f8f9fa;
             font-family: 'Tajawal', sans-serif;
@@ -190,6 +230,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
     </style>
 </head>
 <body>
+<div class="container mt-4">
+        <h1 class="text-center mb-4">عرض جميع الأجهزة</h1>
+
+        <!-- السلايدر -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <?php
+                // جلب جميع الأجهزة من قاعدة البيانات لعرضها في السلايدر
+                $devices_slider_query = "SELECT * FROM devices";
+                $devices_slider_result = $conn->query($devices_slider_query);
+                while ($device = $devices_slider_result->fetch_assoc()):
+                ?>
+                <div class="swiper-slide">
+                    <img src="<?php echo htmlspecialchars($device['image_path'] ?? 'default-image.png'); ?>" 
+                         alt="<?php echo htmlspecialchars($device['device_name']); ?>">
+                </div>
+                <?php endwhile; ?>
+            </div>
+            <!-- الأزرار -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- النقاط -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper-container', {
+            loop: true, // التشغيل بشكل دائري
+            autoplay: {
+                delay: 3000, // التمرير التلقائي كل 3 ثواني
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            slidesPerView: 3, // عدد العناصر المرئية
+            spaceBetween: 20, // المسافة بين العناصر
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                480: {
+                    slidesPerView: 1,
+                },
+            },
+        });
+    </script>
     <div class="container mt-4">
         <!-- قائمة التصنيفات -->
         <div class="category-buttons">
@@ -321,6 +415,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 
 <!-- إضافة Bootstrap CSS و JS -->
 
+<footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <p>Headquarters</p>
+                <p>Khartoum Sudan , Khartoum, Sudan, 11111</p>
+                <p>Tel. +249 91 007 0078</p>
+
+            </div>
+            <div class="footer-column">
+                <h4>About Us</h4>
+                <p>Who We Are</p>
+                <p>CEO’s Message</p>
+                <p>Business Methodology</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <p>Our Solutions</p>
+                <p>Our Partners</p>
+                <p>Our Clients</p>
+                <p>Careers</p>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <p>Contact Us</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Terma Medical Supplies Co.Ltd
+                © All Rights Reserved</p>
+        </div>
+    </footer>
 </html>
 
 
