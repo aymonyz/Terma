@@ -295,9 +295,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
     </section>
 
     <!-- الفوتر (Footer) -->
-
-
-
+<div class="partners-section">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3843.1250525689757!2d32.56246078514776!3d15.584966089181707!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x168e9164c0578643%3A0x24415aa6f2b89712!2z2LTYsdmD2Kkg2KrZitix2YXYpyDZhNmE2KrZiNix2YrYr9in2Kog2KfZhNi32KjZitip!5e0!3m2!1sar!2ssa!4v1733761641151!5m2!1sar!2ssa" width="700 " height="800" style="border:1;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
 
     <footer class="footer">
         <div class="footer-container">
