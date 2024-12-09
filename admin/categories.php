@@ -1,16 +1,14 @@
 <?php
+session_start();
+ob_start();
 include '../db.php';
 include 'amin-Header.php';
 
-session_start();
 
-if (isset($_SESSION['user_id'])) {
-    $username = $_SESSION['email'];
-} else {
+if (!isset($_SESSION['user_id'])) {
     header("Location: ../index.php");
     exit();
 }
-
 // تسجيل الخروج
 if (isset($_GET['logout'])) {
     session_destroy();
@@ -119,29 +117,9 @@ while ($row = $result->fetch_assoc()) {
     $categories[] = $row;
 }
 
-// جلب الأجهزة
-$devices = [];
-$devices_query = "
-    SELECT devices.*, categories.category_name 
-    FROM devices 
-    LEFT JOIN categories ON devices.category_id = categories.id";
-$result_devices = $conn->query($devices_query);
-while ($row = $result_devices->fetch_assoc()) {
-    $devices[] = $row;
-}
 
-// جلب الطلبات
-$purchase_requests = [];
-$requests_query = "
-    SELECT 
-        purchase_requests.*, 
-        devices.device_name 
-    FROM purchase_requests 
-    JOIN devices ON purchase_requests.device_id = devices.id";
-$result_requests = $conn->query($requests_query);
-while ($row = $result_requests->fetch_assoc()) {
-    $purchase_requests[] = $row;
-}
+
+
 ?>
 
 <!DOCTYPE html>

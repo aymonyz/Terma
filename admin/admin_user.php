@@ -1,20 +1,19 @@
 <?php
+session_start();
+ob_start();
 include '../db.php';
 include 'amin-Header.php';
 
-session_start();
 
-if (isset($_SESSION['user_id'])) {
-    $username = $_SESSION['email'];
-} else {
-    header("Location: ../admin.php");
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.php");
     exit();
 }
 
 // تسجيل الخروج
 if (isset($_GET['logout'])) {
     session_destroy();
-    header("Location: ../admin.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -75,7 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
     ";
 
     if ($conn->query($insert_query) === TRUE) {
-        header("Location: admin_user.php"); // إعادة التوجيه
+        header("Location: " . $_SERVER['PHP_SELF']);
+        // إعادة التوجيه
         exit();
     } else {
         echo "Error: " . $conn->error;
