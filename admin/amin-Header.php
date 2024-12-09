@@ -132,6 +132,9 @@
         <a href="devices.php" class="d-flex align-items-center">
             <i class="fas fa-desktop me-2"></i> إدارة الأجهزة
         </a>
+        <a href="maintenance_requests.php"><i class="fas fa-clipboard-list"></i>طلبات الصيانة</a>
+
+        
         <a href="../index.php" class="d-flex align-items-center">
             <i class="fas fa-arrow-left me-2"></i> العودة
         </a>
