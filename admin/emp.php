@@ -1,20 +1,18 @@
 <?php
+session_start();
+ob_start();
 include '../db.php';
 include 'amin-Header.php';
 
-session_start();
-
-if (isset($_SESSION['user_id'])) {
-    $username = $_SESSION['email'];
-} else {
-    header("Location: ../admin.php");
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.php");
     exit();
 }
 
 // تسجيل الخروج
 if (isset($_GET['logout'])) {
     session_destroy();
-    header("Location: ../admin.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -54,22 +52,8 @@ if (isset($_GET['delete_employee'])) {
     exit();
 }
 
-// تعديل بيانات المستخدم
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
-    $id = intval($_POST['id']);
-    $first_name = $conn->real_escape_string($_POST['first_name']);
-    $last_name = $conn->real_escape_string($_POST['last_name']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $phone = $conn->real_escape_string($_POST['phone']);
-    $city = $conn->real_escape_string($_POST['city']);
-    $job_title = $conn->real_escape_string($_POST['job_title']);
 
-    $conn->query("UPDATE user SET first_name = '$first_name', last_name = '$last_name', email = '$email', phone = '$phone', city = '$city', job_title = '$job_title' WHERE id = $id");
-    header("Location: admin_user.php");
-    exit();
-}
 
-// تعديل بيانات الموظف
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_employee'])) {
     $id = intval($_POST['id']);
     $first_name = $conn->real_escape_string($_POST['first_name']);
@@ -80,27 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_employee'])) {
     $job_title = $conn->real_escape_string($_POST['job_title']);
 
     $conn->query("UPDATE emp SET first_name = '$first_name', last_name = '$last_name', email = '$email', phone = '$phone', city = '$city', job_title = '$job_title' WHERE id = $id");
-    header("Location: admin_user.php");
+    header("Location: emp.php");
     exit();
 }
 
-// إضافة مستخدم جديد
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
-    $first_name = $conn->real_escape_string($_POST['first_name']);
-    $last_name = $conn->real_escape_string($_POST['last_name']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $phone = $conn->real_escape_string($_POST['phone']);
-    $city = $conn->real_escape_string($_POST['city']);
-    $job_title = $conn->real_escape_string($_POST['job_title']);
-    $birth_date = $conn->real_escape_string($_POST['birth_date']);
-    $password = password_hash($conn->real_escape_string($_POST['password']), PASSWORD_DEFAULT);
 
-    $conn->query("INSERT INTO user (first_name, last_name, email, phone, city, job_title, birth_date, password) VALUES ('$first_name', '$last_name', '$email', '$phone', '$city', '$job_title', '$birth_date', '$password')");
-    header("Location: admin_user.php");
-    exit();
-}
 
-// إضافة موظف جديد
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
     $first_name = $conn->real_escape_string($_POST['first_name']);
     $last_name = $conn->real_escape_string($_POST['last_name']);
@@ -112,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
     $created_by = $_SESSION['user_id'];
 
     $conn->query("INSERT INTO emp (first_name, last_name, email, phone, city, job_title, password, created_by) VALUES ('$first_name', '$last_name', '$email', '$phone', '$city', '$job_title', '$password', '$created_by')");
-    header("Location: admin_user.php");
+    header("Location: emo.php");
     exit();
 }
 ?>

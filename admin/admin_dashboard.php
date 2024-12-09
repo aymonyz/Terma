@@ -1,12 +1,12 @@
 <?php
+session_start();
+ob_start();
 include '../db.php';
 include 'amin-Header.php';
-session_start();
 
-if (isset($_SESSION['user_id'])) {
-    $username = $_SESSION['email'];
-} else {
-    header("Location: ../admin.php");
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.php");
     exit();
 }
 
@@ -31,9 +31,9 @@ $result_device = $conn->query($device);
 $total_device = $result_device->fetch_assoc()['device_jobs'];
 
 // // جلب عدد الإعلانات
-// $ads_query = "SELECT COUNT(*) as total_ads FROM ads";
-// $result_ads = $conn->query($ads_query);
-// $total_ads = $result_ads->fetch_assoc()['total_ads'];
+$categories = "SELECT COUNT(*) as total_categories FROM categories";
+$result_categories = $conn->query($categories);
+$total_categories = $result_categories->fetch_assoc()['total_categories'];
 
 // // جلب عدد الطلبات المعلقة
 $pending_requests_query = "SELECT COUNT(*) as pending_requests FROM orders WHERE status = 0";
@@ -158,7 +158,7 @@ $total_users = $user + $total_emp;
             <div class="col-md-4">
                 <div class="card text-center">
                     <h5 class="text-success">التصنيفات</h5>
-                    <p>عدد التصنيفات: <strong><?php echo $categories; ?></strong></p>
+                    <p>عدد التصنيفات: <strong><?php echo $total_categories; ?></strong></p>
                     
                     <a href="categories.php" class="text-success">عرض التفاصيل</a>
                 </div>

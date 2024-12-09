@@ -1,11 +1,17 @@
 <?php
+session_start();
+ob_start();
 include '../db.php';
 include 'amin-Header.php';
 
-session_start();
 
 // تحقق من تسجيل الدخول
 if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.php");
+    exit();
+}
+if (isset($_GET['logout'])) {
+    session_destroy();
     header("Location: ../index.php");
     exit();
 }
@@ -145,21 +151,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                                 <td><?php echo htmlspecialchars($request['quantity']); ?></td>
                                 <td><?php echo htmlspecialchars($request['total_price']); ?></td>
                                 <td>
-                                    <span class="badge 
-                                        <?php echo $request['status'] === 'pending' ? 'bg-warning' : ($request['status'] === 'approved' ? 'bg-success' : 'bg-danger'); ?>">
-                                        <?php echo htmlspecialchars($request['status']); ?>
-                                    </span>
+                                <span class="badge 
+                                    <?php 
+                                        echo $request['status'] == 0 ? 'bg-warning' : 
+                                            ($request['status'] == 1 ? 'bg-success' : 'bg-danger'); 
+                                    ?>">
+                                    <?php 
+                                        echo $request['status'] == 0 ? 'معلقة' : 
+                                            ($request['status'] == 1 ? 'مقبولة' : 'مرفوضة'); 
+                                    ?>
+                                </span>
                                 </td>
                                 <td>
-                                    <form method="POST" action="">
-                                        <input type="hidden" name="id" value="<?php echo $request['id']; ?>">
-                                        <select name="status" onchange="this.form.submit()" class="form-select">
-                                            <option value="pending" <?php echo $request['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
-                                            <option value="approved" <?php echo $request['status'] === 'approved' ? 'selected' : ''; ?>>Approved</option>
-                                            <option value="rejected" <?php echo $request['status'] === 'rejected' ? 'selected' : ''; ?>>Rejected</option>
-                                        </select>
-                                        <input type="hidden" name="update_status" value="1">
-                                    </form>
+                    <form method="POST" action="">
+                        <input type="hidden" name="id" value="<?php echo $request['id']; ?>">
+                        <select name="status" onchange="this.form.submit()" class="form-select">
+                            <option value="0" <?php echo $request['status'] == 0 ? 'selected' : ''; ?>>معلقة</option>
+                            <option value="1" <?php echo $request['status'] == 1 ? 'selected' : ''; ?>>مقبولة</option>
+                            <option value="2" <?php echo $request['status'] == 2 ? 'selected' : ''; ?>>مرفوضة</option>
+                        </select>
+                        <input type="hidden" name="update_status" value="1">
+                    </form>
+
                                 </td>
                             </tr>
                         <?php endforeach; ?>
