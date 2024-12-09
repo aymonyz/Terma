@@ -249,10 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
                 <?php endwhile; ?>
             </div>
             <!-- الأزرار -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <!-- النقاط -->
-            <div class="swiper-pagination"></div>
+  
         </div>
     </div>
 
