@@ -503,38 +503,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 
 <!-- إضافة Bootstrap CSS و JS -->
 
-<footer class="footer">
-        <div class="footer-container">
-            <div class="footer-column">
-                <h4>Contact Us</h4>
-                <p>Headquarters</p>
-                <p>Khartoum Sudan , Khartoum, Sudan, 11111</p>
-                <p>Tel. +249 91 007 0078</p>
+<footer class="footer" id="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>تواصل معنا</h4>
+            <p>المقر الرئيسي</p>
+            <p>الخرطوم، السودان، 11111</p>
+            <p>هاتف: +249 91 007 0078</p>
+        </div>
+        <div class="footer-column">
+            <h4>من نحن</h4>
+            <p>من نحن</p>
+            <p>رسالة المدير التنفيذي</p>
+            <p>منهجية العمل</p>
+        </div>
+        <div class="footer-column">
+            <h4>روابط سريعة</h4>
+            <p>حلولنا</p>
+            <p>شركاؤنا</p>
+            <p>عملاؤنا</p>
+            <p>الوظائف</p>
+        </div>
+        <div class="footer-column">
+            <h4>الدعم</h4>
+            <p>تواصل معنا</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>شركة تيرما للإمدادات الطبية المحدودة
+            © جميع الحقوق محفوظة</p>
+    </div>
+</footer>
 
-            </div>
-            <div class="footer-column">
-                <h4>About Us</h4>
-                <p>Who We Are</p>
-                <p>CEO’s Message</p>
-                <p>Business Methodology</p>
-            </div>
-            <div class="footer-column">
-                <h4>Quick Links</h4>
-                <p>Our Solutions</p>
-                <p>Our Partners</p>
-                <p>Our Clients</p>
-                <p>Careers</p>
-            </div>
-            <div class="footer-column">
-                <h4>Support</h4>
-                <p>Contact Us</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>Terma Medical Supplies Co.Ltd
-                © All Rights Reserved</p>
-        </div>
-    </footer>
 </html>
 
 

@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>صفحة الدخول</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Google Web Fonts -->
@@ -135,41 +135,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <!-- Form Section -->
                         <div class="col-md-6">
-                            <h1 class="text-center mb-4">Log In</h1>
+                            <h1 class="text-center mb-4">تسجيل الدخول</h1>
                             <form action="" method="POST">
                                 <!-- Account Type Selection -->
                                 <div class="mb-3">
-                                    <label for="accountType" class="form-label">Account Type</label>
+                                    <label for="accountType" class="form-label">نوع الحساب
+</label>
                                     <select id="accountType" name="accountType" class="form-select" required>
-                                        <option value="" disabled selected>Select Account Type</option>
-                                        <option value="employee">Employee</option>
-                                        <option value="customer">Customer</option>
-                                        <option value="admin">Admin</option>
+                                        <option value="" disabled selected>اختار  نوع الحساب
+</option>
+                                        <option value="employee">موظف</option>
+                                        <option value="customer">عميل</option>
+                                        <option value="admin">مدير</option>
                                     </select>
                                 </div>
                                 <!-- Email -->
                                 <div class="mb-3">
-                                    <label class="form-label" for="UserName">Email</label>
+                                    <label class="form-label" for="UserName">الابريد الاكتروني </label>
                                     <input class="form-control" type="text" id="UserName" name="email" placeholder="Enter your email" required>
                                 </div>
                                 <!-- Password -->
                                 <div class="mb-3">
-                                    <label class="form-label" for="pass">Password</label>
+                                    <label class="form-label" for="pass">كلمت المرور</label>
                                     <input class="form-control" type="password" id="pass" name="pass" placeholder="Enter your password" required>
                                 </div>
                                 <!-- Remember Me -->
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
-                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                    <label class="form-check-label" for="rememberMe">تذكرني تسجيل الدخول</label>
                                 </div>
                                 <!-- Submit Button -->
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary">Log In</button>
+                                    <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
                                 </div>
                             </form>
                             <!-- Links -->
                             <div class="text-center mt-3">
-                                <a href="register.php" class="text-decoration-none">Create an account</a>
+                                <a href="register.php" class="text-decoration-none">إنشاء حساب</a>
                             </div>
                             <!-- عرض الرسالة -->
                             <?php if (!empty($message)): ?>

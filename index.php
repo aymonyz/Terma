@@ -78,14 +78,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
         
         <nav class="navbar" id="navbar">
             <ul class="nav-list">
-                <li class="nav-item"><a href="#About">About us</a></li>
-                <li class="nav-item"><a href="#section1">Solutions</a></li>
-                <li class="nav-item"><a href="#clients-section">Our Clients</a></li>
-                <li class="nav-item"><a href="#partners-section">Partners</a></li>
-                <li class="nav-item"><a href="#footer">Contact</a></li>
+                <li class="nav-item"><a href="#About">تعرف علينا</a></li>
+                <li class="nav-item"><a href="#section1">الحلول</a></li>
+                <li class="nav-item"><a href="#clients-section">عملائنا</a></li>
+                <li class="nav-item"><a href="#partners-section">الشركاء</a></li>
+                <li class="nav-item"><a href="#footer">تصل بنأ</a></li>
                 <?php if ($logged_in): ?>
                     <?php if ($account_type === 'customer'): ?>
-                        <li class="nav-item"><a href="user/profail.php" class="nav-link">Profile</a></li>
+                        <li class="nav-item"><a href="user/profail.php" class="nav-link">الملف الشخصي </a></li>
                         <li class="nav-item cart-icon">
                             <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#cartModal">
                                 <i class="fa-solid fa-cart-shopping"></i>
@@ -94,11 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
                     <?php elseif ($account_type === 'employee'): ?>
                         <li class="nav-item"><a href="emp/profail.php" class="nav-link">Control</a></li>
                     <?php elseif ($account_type === 'admin'): ?>
-                        <li class="nav-item"><a href="admin/admin_dashboard.php" class="nav-link">Admin Panel</a></li>
+                        <li class="nav-item"><a href="admin/admin_dashboard.php" class="nav-link">لوحة تحكم المدير</a></li>
                     <?php endif; ?>
-                    <li class="nav-item"><a href="pages/logout.php" class="nav-link">Logout</a></li>
+                    <li class="nav-item"><a href="pages/logout.php" class="nav-link">تسجيل خروج</a></li>
                 <?php else: ?>
-                    <li class="nav-item"><a href="pages/login.php" class="nav-link">Login</a></li>
+                    <li class="nav-item"><a href="pages/login.php" class="nav-link">تسجيل دخول</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
@@ -119,19 +119,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
     <!-- قسم التعريف بالشركة -->
     <section class="about-section" id="About">
         <div class="container">
-            <h3 class="section-title">KNOW US</h3>
-            <h2 class="main-title">Who We Are</h2>
+            <h3 class="section-title">تعرف علينا</h3>
+            <h2 class="main-title">من نحن</h2>
             <p class="description">
-                Terma Medical is the leading healthcare solutions provider in Khartoum Sudan. Over the years, we have
-                partnered with the world’s most renowned healthcare companies that offer the best-in-class solutions and
-                finest technology. Through ongoing and sustainable improvements, we can provide solutions that generate
-                significant value for healthcare providers and their patients.
-
-                Terma Medical is the leading healthcare solutions provider in Khartoum Sudan. Over the years, we have
-                partnered with the world’s most renowned healthcare companies that offer the best-in-class solutions and
-                finest technology. Through ongoing and sustainable improvements, we can provide solutions that generate
-                significant value for healthcare providers and their patients.
-            </p>
+<h1>            Terma Medical هي الشركة الرائدة في تقديم حلول الرعاية الصحية في الخرطوم بالسودان. على مر السنين، تعاونا مع أشهر شركات الرعاية الصحية في العالم والتي تقدم أفضل الحلول في فئتها وأرقى التقنيات. من خلال التحسينات المستمرة والمستدامة، يمكننا تقديم حلول تولد قيمة كبيرة لمقدمي الرعاية الصحية ومرضاهم.
+</h1>
+        </p>
             <div class="stats">
                 <div class="stat">
                     <img src="icom/count-icon-3.webp" alt="Partners Icon" class="icon">
@@ -157,7 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
     <div id="section1" class="section py-5" style="background-color: #f9f9f9;">
         <div class="container">
             <h2 class="text-center mb-4" style="font-family: 'Tajawal', sans-serif; font-weight: bold; color: #343a40;">
-                How We Can Help You
+            كيف يمكننا مساعدتك
+
             </h2>
             <div class="swiper-container">
                 <!-- أزرار التنقل -->
@@ -217,10 +211,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
         <!-- قسم عملاؤنا -->
         <section id="clients-section" class="clients-section">
             <div class="container">
-                <h3 class="section-title">OUR CLIENTS</h3>
-                <h2 class="main-title">Trusted By</h2>
+                <h3 class="section-title">عملائنا</h3>
+                <h2 class="main-title">موثوق به من قبل</h2>
                 <p class="description">
-                    We are proud to serve many clients across various sectors who trust our expertise and solutions.
+                نحن فخورون بخدمة العديد من العملاء في مختلف القطاعات الذين يثقون بخبراتنا وحلولنا.
                 </p>
                 <div class="clients-logos">
                     <div class="client-logo">
@@ -245,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 
 
 
-        <section id="partners-section" class="partners-section text-center">
+        <!-- <section id="partners-section" class="partners-section text-center"> -->
             <img src="img/s.png" alt="Partners" class="responsive-img">
         </section>
 
@@ -273,12 +267,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
         <!-- قسم شركاؤنا -->
         <section id="partners-section" class="partners-section">
             <div class="container">
-                <h3 class="section-title">OUR PARTNERS</h3>
-                <h2 class="main-title">Quality & Trusted Partners</h2>
+                <h3 class="section-title">شركاؤنا</h3>
+                <h2 class="main-title">شركاء الجودة والثقة</h2>
                 <p class="description">
-                    Our partners are the backbone of our business, providing quality and innovative solutions that help
-                    us
-                    serve our clients better.
+                شركاؤنا هم العمود الفقري لأعمالنا، فهم يقدمون حلولاً عالية الجودة ومبتكرة تساعدنا في خدمة عملائنا بشكل أفضل.
+
                 </p>
                 <div class="partners-logos">
                     <div class="partner-logo">
@@ -309,37 +302,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
         </div>
 
         <footer class="footer" id="footer">
-            <div class="footer-container">
-                <div class="footer-column">
-                    <h4>Contact Us</h4>
-                    <p>Headquarters</p>
-                    <p>Khartoum Sudan , Khartoum, Sudan, 11111</p>
-                    <p>Tel. +249 91 007 0078</p>
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>تواصل معنا</h4>
+            <p>المقر الرئيسي</p>
+            <p>الخرطوم، السودان، 11111</p>
+            <p>هاتف: +249 91 007 0078</p>
+        </div>
+        <div class="footer-column">
+            <h4>من نحن</h4>
+            <p>من نحن</p>
+            <p>رسالة المدير التنفيذي</p>
+            <p>منهجية العمل</p>
+        </div>
+        <div class="footer-column">
+            <h4>روابط سريعة</h4>
+            <p>حلولنا</p>
+            <p>شركاؤنا</p>
+            <p>عملاؤنا</p>
+            <p>الوظائف</p>
+        </div>
+        <div class="footer-column">
+            <h4>الدعم</h4>
+            <p>تواصل معنا</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>شركة تيرما للإمدادات الطبية المحدودة
+            © جميع الحقوق محفوظة</p>
+    </div>
+</footer>
 
-                </div>
-                <div class="footer-column">
-                    <h4>About Us</h4>
-                    <p>Who We Are</p>
-                    <p>CEO’s Message</p>
-                    <p>Business Methodology</p>
-                </div>
-                <div class="footer-column">
-                    <h4>Quick Links</h4>
-                    <p>Our Solutions</p>
-                    <p>Our Partners</p>
-                    <p>Our Clients</p>
-                    <p>Careers</p>
-                </div>
-                <div class="footer-column">
-                    <h4>Support</h4>
-                    <p>Contact Us</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>Terma Medical Supplies Co.Ltd
-                    © All Rights Reserved</p>
-            </div>
-        </footer>
         <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">

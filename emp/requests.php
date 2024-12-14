@@ -128,7 +128,7 @@ $stmt->close();
     </div>
 
     <div class="container mt-4">
-        <h2 class="mb-4 text-center">طلبات العملاء للأجهزة الخاصة بك</h2>
+        <h2 class="mb-4 text-center">طلبات العملاء للأجهزة </h2>
 
         <table class="table table-striped">
             <thead class="table-primary">

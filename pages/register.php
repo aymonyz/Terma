@@ -66,7 +66,7 @@ $conn->close();
 <meta charset="utf-8">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
+  <title>انشاء حساب </title>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
@@ -150,52 +150,52 @@ $conn->close();
             
             <!-- قسم النموذج -->
             <div class="col-md-6 form-container">
-    <h2 class="text-center">User Registration</h2>
+    <h2 class="text-center">تسجيل المستخدم</h2>
     <form method="POST" action="">
         <div class="mb-3">
-            <label for="first_name">First Name</label>
-            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Enter your first name" required>
+            <label for="first_name">اسم الاول </label>
+            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="ادخل الاسم الاول " required>
         </div>
         <div class="mb-3">
-            <label for="last_name">Last Name</label>
-            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Enter your last name" required>
+            <label for="last_name">الاسم التاني</label>
+            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="ادخل الاسم التاني " required>
         </div>
         <div class="mb-3">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+            <label for="email">البريد الاكتروني </label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="البريد الاكتروني " required>
         </div>
         <div class="mb-3">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+            <label for="password">كلمت السر</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="ادخل كلمت السر " required>
         </div>
-        <label class="form-label">Gender</label>
+        <label class="form-label">الجنس</label>
         <div class="mb-3">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="gender" id="male" value="Male" required>
-                <label class="form-check-label" for="male">Male</label>
+                <label class="form-check-label" for="male">انثي</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="gender" id="female" value="Female" required>
-                <label class="form-check-label" for="female">Female</label>
+                <label class="form-check-label" for="female">ذكر</label>
             </div>
         </div>
         <div class="mb-3">
-            <label for="birth_date">Date of Birth</label>
+            <label for="birth_date">تاريخ الميلاد</label>
             <input type="date" id="birth_date" name="birth_date" class="form-control" required>
         </div>
         <div class="mb-3">
-            <label for="phone">Phone Number</label>
-            <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
+            <label for="phone">رقم التلفون</label>
+            <input type="text" id="phone" name="phone" class="form-control" placeholder="أدخل رقم هاتفك" required>
         </div>
         <div class="mb-3">
-            <label for="city">City</label>
-            <input type="text" id="city" name="city" class="form-control" placeholder="Enter your city" required>
+            <label for="city">المدينة</label>
+            <input type="text" id="city" name="city" class="form-control" placeholder="أدخل مدينتك" required>
         </div>
         <div class="mb-3">
-            <label for="job_title">Job Title</label>
-            <input type="text" id="job_title" name="job_title" class="form-control" placeholder="Enter your job title" required>
+            <label for="job_title">مسمى وظيفي</label>
+            <input type="text" id="job_title" name="job_title" class="form-control" placeholder="أدخل عنوان وظيفتك" required>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Register</button>
+        <button type="submit" class="btn btn-primary w-100">يسجل</button>
     </form>
 </div>
 <?php if (!empty($message)): ?>
@@ -204,7 +204,7 @@ $conn->close();
     </div>
 <?php endif; ?>
 
-        <a href="login.php" class="btn btn-primary w-100">Do you have an account?</a>
+        <a href="login.php" class="btn btn-primary w-100">هل لديك حساب؟</a>
     </div>
 
     <!-- تضمين Bootstrap JS -->
