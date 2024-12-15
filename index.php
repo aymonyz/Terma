@@ -105,12 +105,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 
 
 
-            <!-- النص الرئيسي في الهيدر -->
+            <!-- النص الرئيسي في الهيدر
             <div class="hero-text">
                 <h1>Terma Medical</h1>
                 <p>Supplies Co. Ltd</p>
             </div>
-        </div>
+        </div> -->
 </header>
     <!-- قسم الفيديو (Hero Section) -->
 
@@ -118,32 +118,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 
     <!-- قسم التعريف بالشركة -->
     <section class="about-section" id="About">
-        <div class="container">
-            <h3 class="section-title">تعرف علينا</h3>
-            <h2 class="main-title">من نحن</h2>
-            <p class="description">
-<h1>            Terma Medical هي الشركة الرائدة في تقديم حلول الرعاية الصحية في الخرطوم بالسودان. على مر السنين، تعاونا مع أشهر شركات الرعاية الصحية في العالم والتي تقدم أفضل الحلول في فئتها وأرقى التقنيات. من خلال التحسينات المستمرة والمستدامة، يمكننا تقديم حلول تولد قيمة كبيرة لمقدمي الرعاية الصحية ومرضاهم.
-</h1>
+    <div class="container">
+        <h3 class="section-title">تعرف علينا</h3>
+        <h2 class="main-title">من نحن</h2>
+        <p class="description">
+            <strong>Terma Medical</strong> هي الشركة الرائدة في تقديم حلول الرعاية الصحية في السودان. 
+            على مدار السنوات، تعاونا مع أبرز شركات الرعاية الصحية العالمية التي تقدم أفضل الحلول في فئتها وأحدث التقنيات. 
+            من خلال التركيز على التطوير المستدام والابتكار المستمر، نسعى لتقديم قيمة مضافة لمقدمي الرعاية الصحية ومرضاهم من خلال حلول متكاملة وعالية الجودة.
         </p>
-            <div class="stats">
-                <div class="stat">
-                    <img src="icom/count-icon-3.webp" alt="Partners Icon" class="icon">
-                    <h3>+200</h3>
-                    <p>Employees</p>
-                </div>
-                <div class="stat">
-                    <img src="icom/count-icon-2.webp" alt="Employees Icon" class="icon">
-                    <h3>+600</h3>
-                    <p>Products</p>
-                </div>
-                <div class="stat">
-                    <img src="icom/count-icon-1-150x103.webp" alt="Products Icon" class="icon">
-                    <h3>+70,000</h3>
-                    <p>Partners</p>
-                </div>
+        <div class="stats">
+            <div class="stat">
+                <img src="icom/count-icon-3.webp" alt="Partners Icon" class="icon">
+                <h3>+200</h3>
+                <p>الموظفون</p>
+            </div>
+            <div class="stat">
+                <img src="icom/count-icon-2.webp" alt="Employees Icon" class="icon">
+                <h3>+600</h3>
+                <p>المنتجات</p>
+            </div>
+            <div class="stat">
+                <img src="icom/count-icon-1-150x103.webp" alt="Products Icon" class="icon">
+                <h3>+70,000</h3>
+                <p>الشركاء</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
 
 
