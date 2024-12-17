@@ -283,3 +283,85 @@ position: fixed;
 
 
 
+/* تنسيق عام */
+.about-section {
+    background: #f9f9f9;
+    padding: 60px 0;
+}
+
+.section-header {
+    margin-bottom: 40px;
+}
+
+.section-subtitle {
+    color: #f05a28;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.section-description {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto 40px;
+}
+
+.stat {
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.stat:hover {
+    transform: scale(1.05);
+}
+
+.stat-icon img {
+    width: 60px;
+    margin-bottom: 15px;
+}
+
+.stat-number {
+    font-size: 2rem;
+    color: #007bff;
+    font-weight: 700;
+}
+
+.stat-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+
+
+/* أيقونات العناوين */
+.section-subtitle i,
+.section-title i {
+    color: #f05a28; /* لون الأيقونة */
+    margin-right: 10px; /* مسافة بين الأيقونة والنص */
+    font-size: 1.5rem; /* حجم الأيقونة */
+    vertical-align: middle; /* محاذاة الأيقونة مع النص */
+}
+
+/* تحسين العناوين */
+.section-subtitle {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #f05a28;
+    
+}
+

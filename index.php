@@ -48,12 +48,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Homepage</title>
+    <title>تـيـرمـا للـمـعـدات الـطـبـية</title>
     <!-- الخطوط -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
         integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+
     <!-- استدعاء ملف CSS -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/cart.css">
@@ -92,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
                             </a>
                         </li>
                     <?php elseif ($account_type === 'employee'): ?>
-                        <li class="nav-item"><a href="emp/profail.php" class="nav-link">Control</a></li>
+                        <li class="nav-item"><a href="emp/profail.php" class="nav-link">لوحة التحكم الموظف</a></li>
                     <?php elseif ($account_type === 'admin'): ?>
                         <li class="nav-item"><a href="admin/admin_dashboard.php" class="nav-link">لوحة تحكم المدير</a></li>
                     <?php endif; ?>
@@ -116,31 +120,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 
 
 
-    <!-- قسم التعريف بالشركة -->
-    <section class="about-section" id="About">
+<!-- إضافة Animate.css -->
+
+<!-- قسم التعريف بالشركة -->
+<section class="about-section" id="About">
     <div class="container">
-        <h3 class="section-title">تعرف علينا</h3>
-        <h2 class="main-title">من نحن</h2>
-        <p class="description">
-            <strong>Terma Medical</strong> هي الشركة الرائدة في تقديم حلول الرعاية الصحية في السودان. 
-            على مدار السنوات، تعاونا مع أبرز شركات الرعاية الصحية العالمية التي تقدم أفضل الحلول في فئتها وأحدث التقنيات. 
-            من خلال التركيز على التطوير المستدام والابتكار المستمر، نسعى لتقديم قيمة مضافة لمقدمي الرعاية الصحية ومرضاهم من خلال حلول متكاملة وعالية الجودة.
-        </p>
-        <div class="stats">
-            <div class="stat">
-                <img src="icom/count-icon-3.webp" alt="Partners Icon" class="icon">
-                <h3>+200</h3>
-                <p>الموظفون</p>
+        <!-- العنوان الرئيسي -->
+        <div class="section-header text-center">
+       <!-- قسم العناوين مع الأيقونات -->
+<h3 class="section-subtitle animate__animated animate__fadeInUp">
+    <i class="fas fa-users"></i> تعرف علينا
+</h3>
+<h2 class="section-title animate__animated animate__fadeInUp animate__delay-1s">
+    <i class="fas fa-info-circle"></i> من نحن
+</h2>
+
+            <p class="section-description animate__animated animate__fadeIn animate__delay-2s">
+                <h1>
+                تـيـرمـا للـمـعـدات الـطـبـية : هي الشركة الرائدة في تقديم حلول الرعاية الصحية في السودان
+
+                من خلال التركيز على التطوير المستدام والابتكار المستمر، نعمل على توفير حلول متكاملة وعالية الجودة لمقدمي الرعاية الصحية ومرضاهم.</h1>
+            </p>
+        </div>
+        
+        <!-- الإحصائيات -->
+        <div class="stats row text-center">
+            <div class="col-md-4 stat animate__animated animate__zoomIn">
+                <div class="stat-icon">
+                    <img src="icom/count-icon-3.webp" alt="Employees Icon" class="icon">
+                </div>
+                <h3 class="stat-number" data-target="200">0</h3>
+                <p class="stat-text">الموظفون</p>
             </div>
-            <div class="stat">
-                <img src="icom/count-icon-2.webp" alt="Employees Icon" class="icon">
-                <h3>+600</h3>
-                <p>المنتجات</p>
+            <div class="col-md-4 stat animate__animated animate__zoomIn animate__delay-1s">
+                <div class="stat-icon">
+                    <img src="icom/count-icon-2.webp" alt="Products Icon" class="icon">
+                </div>
+                <h3 class="stat-number" data-target="600">0</h3>
+                <p class="stat-text">المنتجات</p>
             </div>
-            <div class="stat">
-                <img src="icom/count-icon-1-150x103.webp" alt="Products Icon" class="icon">
-                <h3>+70,000</h3>
-                <p>الشركاء</p>
+            <div class="col-md-4 stat animate__animated animate__zoomIn animate__delay-2s">
+                <div class="stat-icon">
+                    <img src="icom/count-icon-1-150x103.webp" alt="Partners Icon" class="icon">
+                </div>
+                <h3 class="stat-number" data-target="70000">0</h3>
+                <p class="stat-text">الشركاء</p>
             </div>
         </div>
     </div>
@@ -149,12 +173,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
 
 
 
-    <div id="section1" class="section py-5" style="background-color: #f9f9f9;">
-        <div class="container">
-            <h2 class="text-center mb-4" style="font-family: 'Tajawal', sans-serif; font-weight: bold; color: #343a40;">
-            كيف يمكننا مساعدتك
 
-            </h2>
+    <div id="section1"  style="background-color: #f9f9f9;">
+        <div class="container">
+        <h2 class="text-center mb-4" style="font-family: 'Tajawal', sans-serif; font-weight: bold; color: #f05a28;">
+    <i class="fas fa-hand-holding-medical" style="margin-right: 10px; color: #f05a28;"></i> 
+    أفضل الحلول الطبية بين يديك
+    <i class="fas fa-heartbeat" style="margin-left: 10px; color: #f05a28;"></i>
+</h2>
             <div class="swiper-container">
                 <!-- أزرار التنقل -->
 
@@ -296,10 +322,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
         </section>
 
         <!-- الفوتر (Footer) -->
-        <div class="partners-section">
+        <div class="map">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3843.1250525689757!2d32.56246078514776!3d15.584966089181707!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x168e9164c0578643%3A0x24415aa6f2b89712!2z2LTYsdmD2Kkg2KrZitix2YXYpyDZhNmE2KrZiNix2YrYr9in2Kog2KfZhNi32KjZitip!5e0!3m2!1sar!2ssa!4v1733761641151!5m2!1sar!2ssa"
-                width="700 " height="800" style="border:1;" allowfullscreen="" loading="lazy"
+                width="100% " height="400%" style="border:1;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
@@ -437,13 +463,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) 
     // Change navbar background on scroll
     window.addEventListener('scroll', () => {
         const navbar = document.getElementById('navbar');
-        if (window.scrollY > 50) {
+        if (window.scrollY > 80) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
     });
 </script>
+<script>
+    // تحريك الأرقام
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 200; // سرعة التحريك
+
+    counters.forEach(counter => {
+        const animate = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+
+            const increment = target / speed;
+
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(animate, 10);
+            } else {
+                counter.innerText = target;
+            }
+        };
+        animate();
+    });
+</script>
+
 </body>
 
 
